@@ -16,7 +16,8 @@ public class StartScreenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_start_screen, container, false);
 
-        Button button = rootView.findViewById(R.id.button);
+        Button button = rootView.findViewById(R.id.button_start_screen_easy);
+        //replaces start screen fragment with minesweeper fragment when the button is clicked
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -16,19 +16,24 @@ public class MinesweeperFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //create options menu
         setHasOptionsMenu(true);
 
+        //inflate view
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
         return rootView;
     }
 
+    //add options to options menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.add("Home");
     }
 
+    //when item is selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //add switch case for multiple options
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.container_main, new StartScreenFragment()).commit();
 
