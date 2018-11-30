@@ -35,11 +35,24 @@ public class StartScreenFragment extends Fragment{
     private class Listener implements View.OnClickListener{
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             //opens minesweeper view
             //replaces container main that holds start screen fragment with minesweeper fragment
+            //depending on the difficulty
+            int id = view.getId();
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.container_main, new MinesweeperFragment()).commit();
+            //switch case statement that opens easy, medium, or hard fragment
+            switch(id){
+                case R.id.button_start_screen_easy:
+                    fm.beginTransaction().replace(R.id.container_main, new MinesweeperFragment()).commit();
+                    break;
+                case R.id.button_start_screen_medium:
+                    fm.beginTransaction().replace(R.id.container_main, new MinesweeperFragment()).commit();
+                    break;
+                case R.id.button_start_screen_hard:
+                    fm.beginTransaction().replace(R.id.container_main, new MinesweeperFragment()).commit();
+                    break;
+            }
         }
     }
 
