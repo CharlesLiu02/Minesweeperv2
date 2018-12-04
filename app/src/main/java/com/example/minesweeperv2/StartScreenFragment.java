@@ -35,11 +35,13 @@ public class StartScreenFragment extends Fragment{
     private class Listener implements View.OnClickListener{
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             //opens minesweeper view
             //replaces container main that holds start screen fragment with minesweeper fragment
+            //depending on the difficulty
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.container_main, new MinesweeperFragment()).commit();
+
+                    fm.beginTransaction().replace(R.id.container_main, new MinesweeperFragment()).commit();
         }
     }
 
