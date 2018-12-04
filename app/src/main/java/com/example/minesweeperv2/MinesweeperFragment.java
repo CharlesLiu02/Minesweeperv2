@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class MinesweeperFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -21,6 +22,8 @@ public class MinesweeperFragment extends Fragment {
 
         //inflate view
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
+
+
         return rootView;
     }
 
