@@ -9,20 +9,31 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class BoardPixelGridView extends View {
-    private Paint paint = new Paint();
+    private Paint paint;
     private int numColumns, numRows;
 
     public BoardPixelGridView(Context context) {
         super(context);
+
+        init(null);
     }
 
     public BoardPixelGridView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        init(attrs);
     }
 
     public BoardPixelGridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        init(attrs);
     }
+
+    private void init(@Nullable AttributeSet set){
+        paint = new Paint();
+    }
+
 
     public void setSize(int numColumns, int numRows){
         this.numColumns = numColumns;
@@ -31,12 +42,10 @@ public class BoardPixelGridView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //canvas.drawColor(Color.rgb(118,255,3));
-        paint.setARGB(256, 100, 100, 100);
 
         //TODO: replace with your own variables
         int numColumns = 5, numRows = 5;
-        int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
+        int cellWidth = canvas.getWidth() / numColumns, cellHeight = canvas.getHeight() / numRows;
 
         if (numColumns == 0 || numRows == 0) {
             return;
@@ -49,23 +58,23 @@ public class BoardPixelGridView extends View {
             for (int j = 0; j < numRows; j++) {
                 if (i % 2 == 0) {
                     if (j % 2 == 0) {
-                        paint.setARGB(256, 255, 0, 0);
+                        paint.setColor(Color.rgb(118,255,3));
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
                     }
                     else{
-                        paint.setARGB(256, 100, 100, 100);
+                        paint.setColor(Color.rgb(118,212,3));
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
                     }
                 }else{
                     if (j % 2 == 0) {
-                        paint.setARGB(256, 100, 100, 100);
+                        paint.setColor(Color.rgb(118,212,3));
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
                     }
                     else{
-                        paint.setARGB(256, 255, 0, 0);
+                        paint.setColor(Color.rgb(118,255,3));
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
                     }
