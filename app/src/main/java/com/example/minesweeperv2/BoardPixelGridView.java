@@ -30,8 +30,11 @@ public class BoardPixelGridView extends View {
         init(attrs);
     }
 
+    //accounts for size, orientation changes to view
     private void init(@Nullable AttributeSet set){
-        paint = new Paint();
+        //declare instance variables here instead of onDraw() so that they are not continuously created
+        //make paint drawing smoother
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
 
@@ -40,12 +43,15 @@ public class BoardPixelGridView extends View {
         this.numRows = numRows;
     }
 
+
+    //call postInvalidate() after updating canvas to redraw the view
     @Override
     protected void onDraw(Canvas canvas) {
 
         //TODO: replace with your own variables
+        //TODO: change numColumns and numRows depending on difficulty
         int numColumns = 5, numRows = 5;
-        int cellWidth = canvas.getWidth() / numColumns, cellHeight = canvas.getHeight() / numRows;
+        int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
 
         if (numColumns == 0 || numRows == 0) {
             return;
