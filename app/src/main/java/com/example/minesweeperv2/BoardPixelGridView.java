@@ -50,7 +50,7 @@ public class BoardPixelGridView extends View {
 
         //TODO: replace with your own variables
         //TODO: change numColumns and numRows depending on difficulty
-        int numColumns = 5, numRows = 5;
+
         int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
 
         if (numColumns == 0 || numRows == 0) {

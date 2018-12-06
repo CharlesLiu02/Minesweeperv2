@@ -1,5 +1,7 @@
 package com.example.minesweeperv2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,7 +27,20 @@ public class MinesweeperFragment extends Fragment {
         //inflate view
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
         board = rootView.findViewById(R.id.boardPixelGridView);
-        board.setSize(5,5);
+
+        //receives information from StartScreenFragment about difficulty value
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String difficulty = sharedPref.getString(StartScreenFragment.KEY, "Easy");
+        //depending on difficulty, sets size of the board
+        if(difficulty.equals("Easy")) {
+            board.setSize(10, 10);
+        }
+        else if(difficulty.equals("Medium")){
+            board.setSize(15, 15);
+        }
+        else{
+            board.setSize(22, 22);
+        }
         return rootView;
     }
 
