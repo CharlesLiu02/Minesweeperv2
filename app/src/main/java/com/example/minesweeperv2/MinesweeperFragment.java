@@ -36,10 +36,10 @@ public class MinesweeperFragment extends Fragment {
             board.setSize(10, 10);
         }
         else if(difficulty.equals("Medium")){
-            board.setSize(15, 15);
+            board.setSize(12, 12);
         }
         else{
-            board.setSize(22, 22);
+            board.setSize(15, 15);
         }
         return rootView;
     }
