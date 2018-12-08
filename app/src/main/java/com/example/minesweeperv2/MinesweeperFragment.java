@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 public class MinesweeperFragment extends Fragment {
     private BoardPixelGridView board;
 
-
     //creates the view of the fragment
     //basically creates what is to be shown on the fragment screen
     @Nullable
@@ -65,4 +64,8 @@ public class MinesweeperFragment extends Fragment {
 
         return true;
     }
+
+    //Todo: make a checkGameDone() method
+        //checks if the game is done and prompts the endScreenDialog class in the MainActivity
+        //returns a boolean true or false depending on if game has ended or not
 }
