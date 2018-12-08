@@ -14,11 +14,9 @@ import android.widget.Button;
 
 public class StartScreenFragment extends Fragment{
 
-    Button buttonEasy;
-    Button buttonMedium;
-    Button buttonHard;
+    private Button buttonEasy, buttonMedium, buttonHard;
 
-    public static final String KEY = "yay";
+    public static final String KEY = "difficulty key";
 
     @Nullable
     @Override
@@ -28,7 +26,6 @@ public class StartScreenFragment extends Fragment{
         buttonEasy = rootView.findViewById(R.id.button_start_screen_easy);
         buttonMedium = rootView.findViewById(R.id.button_start_screen_medium);
         buttonHard = rootView.findViewById(R.id.button_start_screen_hard);
-
 
         //replaces start screen fragment with minesweeper fragment when the button is clicked
         buttonEasy.setOnClickListener(new Listener());

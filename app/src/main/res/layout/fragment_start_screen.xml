@@ -10,21 +10,22 @@
         android:id="@+id/button_start_screen_hard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Hard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_start_screen_title"
-        app:layout_constraintVertical_bias="0.824" />
+        app:layout_constraintTop_toBottomOf="@+id/button_start_screen_easy" />
 
     <TextView
         android:id="@+id/textView_start_screen_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="MINESWEEPER"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,9 +33,9 @@
     <Button
         android:id="@+id/button_start_screen_easy"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="47dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Easy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_start_screen_medium"
@@ -47,8 +48,8 @@
         android:id="@+id/button_start_screen_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,4 +57,15 @@
         app:layout_constraintStart_toEndOf="@+id/button_start_screen_easy"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.633" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="149dp"
+        android:layout_height="118dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_screen_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_start_screen_title"
+        app:srcCompat="@mipmap/ic_minesweeper_logo" />
 </android.support.constraint.ConstraintLayout>

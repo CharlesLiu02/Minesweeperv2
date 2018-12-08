@@ -25,6 +25,7 @@ public class MinesweeperFragment extends Fragment {
         setHasOptionsMenu(true);
 
         //inflate view
+        //when new BoardPixelGridView is created it automatically calls onDraw()
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
         board = rootView.findViewById(R.id.boardPixelGridView);
 

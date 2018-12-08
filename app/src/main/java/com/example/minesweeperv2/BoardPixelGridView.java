@@ -11,6 +11,7 @@ import android.view.View;
 public class BoardPixelGridView extends View {
     private Paint paint;
     private int numColumns, numRows;
+    private Canvas canvas;
 
     public BoardPixelGridView(Context context) {
         super(context);
@@ -44,12 +45,16 @@ public class BoardPixelGridView extends View {
     }
 
 
+    //TODO: figure out a way to randomize bomb placement on the canvas
+        //idk how to do
+
+
     //call postInvalidate() after updating canvas to redraw the view
     @Override
     protected void onDraw(Canvas canvas) {
 
-        //TODO: replace with your own variables
-        //TODO: change numColumns and numRows depending on difficulty
+        //TODO: set the canvas passed as the canvas instance variable
+        //canvas = this.canvas;
 
         int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
 
@@ -57,14 +62,16 @@ public class BoardPixelGridView extends View {
             return;
         }
 
-        int width = getWidth();
-        int height = getHeight();
-
         for (int i = 0; i < numColumns; i++) {
             for (int j = 0; j < numRows; j++) {
                 if (i % 2 == 0) {
                     if (j % 2 == 0) {
                         paint.setColor(Color.rgb(118,255,3));
+
+                        //TODO: create tile obj and call draw method in the tile class on the object
+                        //TODO: do canvas.tile.draw( variables )
+                        /*Tile tile = new Tile(i,j);*/
+
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
                     }
