@@ -1,3 +1,5 @@
+//shows the actual minesweeper game with the board
+
 package com.example.minesweeperv2;
 
 import android.content.Context;
@@ -18,18 +20,21 @@ public class MinesweeperFragment extends Fragment {
     private BoardPixelGridView board;
 
 
+    //creates the view of the fragment
+    //basically creates what is to be shown on the fragment screen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //create options menu
+        //create options menu in the top right of the fragment screen
         setHasOptionsMenu(true);
 
-        //inflate view
+        //inflate view in which view will be rendered by creating view object in memory
         //when new BoardPixelGridView is created it automatically calls onDraw()
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
         board = rootView.findViewById(R.id.boardPixelGridView);
 
         //receives information from StartScreenFragment about difficulty value
+        //checks the KEY
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String difficulty = sharedPref.getString(StartScreenFragment.KEY, "Easy");
         //depending on difficulty, sets size of the board
@@ -45,16 +50,16 @@ public class MinesweeperFragment extends Fragment {
         return rootView;
     }
 
-    //add options to options menu
+    //adding options to options menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.add("Home");
     }
 
-    //when item is selected
+    //when item is selected in the options menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //add switch case for multiple options
+        //add switch case for multiple options in the options menu in the top right corner
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.container_main, new StartScreenFragment()).commit();
 
