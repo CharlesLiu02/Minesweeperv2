@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             //if method returns true then the endScreenDialog is shown
             //else do nothing
 
+        //when on creating the activity, then create the dialog
         showResultsDialog();
     }
 

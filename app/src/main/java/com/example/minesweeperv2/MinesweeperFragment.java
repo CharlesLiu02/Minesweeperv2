@@ -17,7 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class MinesweeperFragment extends Fragment {
-    private BoardPixelGridView board;
+    public BoardPixelGridView board;
+    public MinesweeperGame game;
 
     //creates the view of the fragment
     //basically creates what is to be shown on the fragment screen
@@ -37,16 +38,24 @@ public class MinesweeperFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String difficulty = sharedPref.getString(StartScreenFragment.KEY, "Easy");
         //depending on difficulty, sets size of the board
+        //creates a new game and sets size of the game
         if(difficulty.equals("Easy")) {
             board.setSize(10, 10);
+            game = new MinesweeperGame(10);
         }
         else if(difficulty.equals("Medium")){
             board.setSize(12, 12);
+            game = new MinesweeperGame(12);
         }
         else{
             board.setSize(15, 15);
+            game = new MinesweeperGame(15);
         }
         return rootView;
+    }
+
+    public BoardPixelGridView getBoard() {
+        return board;
     }
 
     //adding options to options menu
@@ -64,8 +73,4 @@ public class MinesweeperFragment extends Fragment {
 
         return true;
     }
-
-    //Todo: make a checkGameDone() method
-        //checks if the game is done and prompts the endScreenDialog class in the MainActivity
-        //returns a boolean true or false depending on if game has ended or not
 }

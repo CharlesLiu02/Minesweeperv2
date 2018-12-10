@@ -61,17 +61,9 @@ public class BoardPixelGridView extends View {
         this.numRows = numRows;
     }
 
-
-    //TODO: figure out a way to randomize bomb placement on the canvas
-        //idk how to do
-
-
     //call postInvalidate() after updating canvas to redraw the view
     @Override
     protected void onDraw(Canvas canvas) {
-
-        //TODO: set the canvas passed as the canvas instance variable
-        //canvas = this.canvas;
 
         int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
 
@@ -84,11 +76,6 @@ public class BoardPixelGridView extends View {
                 if (i % 2 == 0) {
                     if (j % 2 == 0) {
                         paint.setColor(Color.rgb(118,255,3));
-
-                        //TODO: create tile obj and call draw method in the tile class on the object
-                        //TODO: do canvas.tile.draw( variables )
-                        /*Tile tile = new Tile(i,j);*/
-
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
                     }
@@ -111,7 +98,5 @@ public class BoardPixelGridView extends View {
                 }
             }
         }
-
-//
     }
 }
