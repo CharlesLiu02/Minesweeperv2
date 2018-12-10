@@ -6,12 +6,25 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class BoardPixelGridView extends View {
     private Paint paint;
     private int numColumns, numRows;
     private Canvas canvas;
+    private final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+        public void onLongPress(MotionEvent e) {
+            Log.d("", "xPosition: " + e.getX() + "," + "yPosition: " + e.getY());
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return super.onSingleTapUp(e);
+        }
+    });
 
     public BoardPixelGridView(Context context) {
         super(context);
@@ -38,6 +51,10 @@ public class BoardPixelGridView extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
+    }
 
     public void setSize(int numColumns, int numRows){
         this.numColumns = numColumns;

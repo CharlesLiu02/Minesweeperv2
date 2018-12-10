@@ -3,13 +3,13 @@ package com.example.minesweeperv2;
 public class Tile {
 
     private int xLocation, yLocation;
-    private boolean hasBomb;
-    private boolean hasFlag = false;
+        private boolean hasBomb;
+        private boolean hasFlag = false;
 
-    //constructor for the tile
+        //constructor for the tile
         //include hasBomb and hasFlag or not???
     public Tile(int x, int y) {
-        this.xLocation = x;
+            this.xLocation = x;
         this.yLocation = y;
     }
 
