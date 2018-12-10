@@ -4,8 +4,12 @@ package com.example.minesweeperv2;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,13 +31,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showResultsDialog() {
-        //displaying end screen fragment
-        FragmentManager fm = getSupportFragmentManager();
-        //sets title of end screen fragment
-        EndScreenDialog endScreenDialog = EndScreenDialog.newInstance("End Game");
-        //calls the style to show title
-        endScreenDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
-        endScreenDialog.show(fm, "fragment_end_screen");
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
+        //need for creating custom view
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.fragment_end_screen, null);
+
+        //initalize variables
+        TextView textView = view.findViewById(R.id.textView);
+
+        alertDialogBuilder.setView(view);
+        alertDialogBuilder.setTitle("End Game");
+
+        alertDialogBuilder.create().show();
     }
 }
