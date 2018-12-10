@@ -29,9 +29,12 @@ public class MinesweeperGame {
     //Todo: make a checkGameDone() method
     //checks if the game is done and prompts the endScreenDialog class in the MainActivity
     //returns a boolean true or false depending on if game has ended or not
-    public boolean checkGameDone() {
 
-    }
+
+    /* public boolean checkGameDone() {
+
+    }*/
+
 
     //TODO: create the flagTile method where user holds down and then the flag is drawn on tile
     //if pressed time > 2 seconds && tile has no flag    then draw flag
