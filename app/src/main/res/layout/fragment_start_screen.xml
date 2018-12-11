@@ -16,14 +16,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#55b92f"
+        android:fontFamily="@font/twiddlestix1"
         android:text="Hard"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.79" />
+        app:layout_constraintTop_toBottomOf="@+id/frag_start_screen_choose_difficulty"
+        app:layout_constraintVertical_bias="0.719" />
 
     <Button
         android:id="@+id/button_start_screen_easy"
@@ -35,6 +35,7 @@
         android:background="#55b92f"
         android:text="Easy"
         android:textColor="#fff"
+        android:fontFamily="@font/twiddlestix1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_start_screen_medium"
         app:layout_constraintHorizontal_bias="0.5"
@@ -51,6 +52,7 @@
         android:background="#55b92f"
         android:text="Medium"
         android:textColor="#fff"
+        android:fontFamily="@font/twiddlestix1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -88,6 +90,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="469dp" />
+        app:layout_constraintGuide_begin="390dp" />
+
+    <TextView
+        android:id="@+id/frag_start_screen_choose_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        android:text="Choose a difficulty:"
+        android:textSize="16dp"
+        android:fontFamily="@font/twiddlestix1"
+        android:textColor="@color/colorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </android.support.constraint.ConstraintLayout>
