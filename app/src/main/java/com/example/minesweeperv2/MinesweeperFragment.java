@@ -32,6 +32,13 @@ public class MinesweeperFragment extends Fragment {
         //when new BoardPixelGridView is created it automatically calls onDraw()
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
         board = rootView.findViewById(R.id.boardPixelGridView);
+        //implements our own listener for the board
+        board.onGridTouchedListener(new BoardPixelGridView.OnGridTouchedListener() {
+            @Override
+            public void onTouch(int row, int col) {
+                //TODO: processClick in Game class
+            }
+        });
 
         //receives information from StartScreenFragment about difficulty value
         //checks the KEY
