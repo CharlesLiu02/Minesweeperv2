@@ -39,6 +39,10 @@ public class BoardPixelGridView extends View {
     }
 
 
+    public void setSize(int numColumns, int numRows){
+        this.numColumns = numColumns;
+        this.numRows = numRows;
+    }
 
     //accounts for size, orientation changes to view
     private void init(@Nullable AttributeSet set){
@@ -68,13 +72,8 @@ public class BoardPixelGridView extends View {
         });
     }
 
-    public void setSize(int numColumns, int numRows){
-        this.numColumns = numColumns;
-        this.numRows = numRows;
-    }
 
-
-    //TODO: figure out a way to randomize bomb placement on the canvas
+    //TODO: figure out a way to draw the randomize bomb placement on the canvas
         //idk how to do
 
 
