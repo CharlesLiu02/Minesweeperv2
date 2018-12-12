@@ -6,25 +6,46 @@ import java.sql.Array;
 
 public class MinesweeperGame {
     private Tile[][] array;
+    private int numBombs;
 
-    public MinesweeperGame(int canvasSize) {
+    public MinesweeperGame(int canvasSize, int numBombs) {
         array = new Tile[canvasSize][canvasSize];
+        this.numBombs = numBombs;
+        for (int i = 0; i < canvasSize; i++) {
+            for (int j = 0; j < canvasSize; j++) {
+                array[i][j] = new Tile(i, j);
+            }
+        }
 
-        for(int i = 0; i < canvasSize; i++) {
-            for(int j = 0; j < canvasSize; j++) {
-                array[i][j] = new Tile(i,j);
+        // randomize the bombs
+        //or if numBombs == 0, when there are no bombs left to place, then the constructor ends
+        while (numBombs > 0) {
+            for (int i = 0; i < canvasSize; i++) {
+                for (int j = 0; j < canvasSize; j++) {
+                    //if there is a bomb at a specific x y location, then the bomb cannot be set to a position on the canvas in the array
+                    if (!array[i][j].ifHasBomb()) {
+                        int x = (int) (Math.random() * canvasSize);
+                        if (x == 1) {
+                            array[i][j].setHasBomb(true);
+                            numBombs--;
+                        }
+                    }
+                }
             }
         }
     }
 
 
-    //TODO: figure out a way to randomize bomb placement on the canvas
-    //idk how to do
+
+
 
     //getArray method to return an array
-    public Tile[][] getArray() {
+    public Tile[][] getArray()
+        {
         return array;
     }
+
+
 
     //Todo: make a checkGameDone() method
     //checks if the game is done and prompts the endScreenDialog class in the MainActivity

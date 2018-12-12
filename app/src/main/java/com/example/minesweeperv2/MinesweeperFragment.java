@@ -48,15 +48,15 @@ public class MinesweeperFragment extends Fragment {
         //creates a new game and sets size of the game
         if(difficulty.equals("Easy")) {
             board.setSize(10, 10);
-            game = new MinesweeperGame(10);
+            game = new MinesweeperGame(10, 10);
         }
         else if(difficulty.equals("Medium")){
             board.setSize(12, 12);
-            game = new MinesweeperGame(12);
+            game = new MinesweeperGame(12, 25);
         }
         else{
             board.setSize(15, 15);
-            game = new MinesweeperGame(15);
+            game = new MinesweeperGame(15, 45);
         }
         return rootView;
     }
