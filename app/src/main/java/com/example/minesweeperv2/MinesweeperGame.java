@@ -19,32 +19,30 @@ public class MinesweeperGame {
 
         // randomize the bombs
         //or if numBombs == 0, when there are no bombs left to place, then the constructor ends
+
         while (numBombs > 0) {
-            for (int i = 0; i < canvasSize; i++) {
-                for (int j = 0; j < canvasSize; j++) {
-                    //if there is a bomb at a specific x y location, then the bomb cannot be set to a position on the canvas in the array
-                    if (!array[i][j].ifHasBomb()) {
-                        int x = (int) (Math.random() * canvasSize);
-                        if (x == 1) {
-                            array[i][j].setHasBomb(true);
-                            numBombs--;
-                        }
-                    }
+            int x = (int) (Math.random() * canvasSize);
+            int y = (int) (Math.random() * canvasSize);
+            {
+                if (!array[x][y].ifHasBomb()) {
+                    array[x][y].setHasBomb(true);
+                    numBombs--;
                 }
             }
         }
+
+
+        // if (!array[i][j].ifHasBomb()) {
+        //int x = (int) (Math.random() * canvasSize);
+        // if (x == 1) {
+        // array[i][j].setHasBomb(true);
+        //numBombs--;
+
     }
 
-
-
-
-
-    //getArray method to return an array
-    public Tile[][] getArray()
-        {
+    public Tile[][] getArray() {
         return array;
     }
-
 
 
     //Todo: make a checkGameDone() method
@@ -82,32 +80,35 @@ public class MinesweeperGame {
     //if there is a bomb in a surrounding tile, add a count variable
     //return count
 
-    public int calculateNumber(Tile tile){
+    public int calculateNumber(Tile tile) {
         int count = 0;
 
         int xLocation = tile.getxLocation();
         int yLocation = tile.getyLocation();
 
-        for(int i = xLocation-1; i < xLocation+2; i++) {
-            if(array[i][yLocation-1].ifHasBomb()) {
+        for (int i = xLocation - 1; i < xLocation + 2; i++) {
+            if (array[i][yLocation - 1].ifHasBomb()) {
                 count++;
             }
         }
 
-        for(int i = xLocation-1; i < xLocation+2; i++) {
-            if(array[i][yLocation+1].ifHasBomb()) {
+        for (int i = xLocation - 1; i < xLocation + 2; i++) {
+            if (array[i][yLocation + 1].ifHasBomb()) {
                 count++;
             }
         }
 
-        if(array[xLocation-1][yLocation].ifHasBomb()) {
+        if (array[xLocation - 1][yLocation].ifHasBomb()) {
             count++;
         }
 
-        if(array[xLocation+1][yLocation].ifHasBomb()) {
+        if (array[xLocation + 1][yLocation].ifHasBomb()) {
             count++;
         }
 
         return count;
     }
 }
+
+
+
