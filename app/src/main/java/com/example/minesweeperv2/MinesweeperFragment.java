@@ -37,6 +37,7 @@ public class MinesweeperFragment extends Fragment {
             @Override
             public void onTouch(int row, int col) {
                 //TODO: processClick in Game class
+
             }
         });
 

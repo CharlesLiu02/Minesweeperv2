@@ -129,8 +129,44 @@ public class BoardPixelGridView extends View {
     //get the row and column that was clicked
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int row = 2; //row that the user clicked
-        int col = 3; //column that the user clicked
+        int row = 0; //row that the user clicked
+        int col = 0; //column that the user clicked
+        int userY = (int)event.getY();
+        int userX = (int)event.getX();
+        int cellHeight = getHeight() / numRows;
+        int cellWidth = getWidth() / numColumns;
+
+        //checks which row user clicked
+        for(int r = 1; r <= numRows; r++){
+            //checks if user clicked is within bounds of cell
+            //if it is, it sets to the corresponding row
+            //if it isn't it keeps on looping
+            if(userY < (r * cellHeight)){
+                row = r;
+
+                if(row != 0){
+                    break;
+                }
+            }
+        }
+        //checks which column user clicked
+        for(int c = 1; c <= numColumns; c++){
+            //checks if user clicked is within bounds of cell
+            //if it is, it sets to the corresponding row
+            //if it isn't it keeps on looping
+            if(userX < (c * cellWidth)){
+                col = c;
+
+                if(col != 0){
+                    break;
+                }
+            }
+        }
+
+        Log.e("cell height", "" + cellHeight);
+        Log.e("user", "" + userY);
+        Log.e("row", "" + row);
+        Log.e("col", "" + col);
         listener.onTouch(row, col);
         return gestureDetector.onTouchEvent(event);
     }
