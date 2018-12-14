@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.util.Log;
@@ -13,12 +15,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class BoardPixelGridView extends View {
     private Paint paint;
     private int numColumns, numRows;
     private Canvas canvas;
     private OnGridTouchedListener listener = null;
     private GestureDetector gestureDetector = null;
+    private ArrayList<Item> items;
 
     public BoardPixelGridView(Context context) {
         super(context);
@@ -49,6 +54,7 @@ public class BoardPixelGridView extends View {
         //declare instance variables here instead of onDraw() so that they are not continuously created
         //make paint drawing smoother
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        items = new ArrayList<>();
 
         //gesture detector is used to handle long and short clicks
         setClickable(true);
@@ -57,6 +63,29 @@ public class BoardPixelGridView extends View {
 
             public void onLongPress(MotionEvent e) {
                 Toast.makeText(getContext(), "Long click", Toast.LENGTH_SHORT).show();
+
+                //Drawable flag = ResourcesCompat.getDrawable(getResources(), R.drawable.minesweeper_flag, null);
+
+                int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
+                int left = 0, top = 0, right = 0, bottom = 0;
+//                for (int i = 0; i < numColumns; i++) {
+//                    for (int j = 0; j < numRows; j++) {
+//                        if (i == getRow(e) && j == getCol(e)) {
+//                            left = i * cellWidth;
+//                            top = j * cellHeight;
+//                            right = (i + 1) * cellWidth;
+//                            bottom = (j + 1) * cellHeight;
+//                        }
+//                    }
+//                }
+                left = cellWidth * getCol(e);
+                top = cellHeight * getRow(e);
+                right = cellWidth * (getCol(e) + 1);
+                bottom = cellHeight * (getRow(e) + 1);
+
+                //onLongPressed adds a flag item to the arraylist of items that needs to be drawn
+                items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
+                invalidate();
             }
 
             @Override
@@ -82,7 +111,7 @@ public class BoardPixelGridView extends View {
     protected void onDraw(Canvas canvas) {
 
         //TODO: set the canvas passed as the canvas instance variable
-        //canvas = this.canvas;
+        //canvas = this.canvas
 
         int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
 
@@ -123,21 +152,63 @@ public class BoardPixelGridView extends View {
             }
         }
 
+        //checks which items it has to draw
+        for(int i = 0; i <items.size(); i++){
+            Drawable item = ResourcesCompat.getDrawable(getResources(), items.get(i).getDrawableId(), null);
+            int left = items.get(i).getLeft();
+            int right = items.get(i).getRight();
+            int top = items.get(i).getTop();
+            int bottom = items.get(i).getBottom();
+            item.setBounds(left, top, right, bottom);
+            item.draw(canvas);
+        }
+
+
+
+
 //
     }
 
     //get the row and column that was clicked
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int row = -1; //row that the user clicked
-        int col = -1; //column that the user clicked
-        int userY = (int)event.getY();
-        int userX = (int)event.getX();
-        int cellHeight = getHeight() / numRows;
-        int cellWidth = getWidth() / numColumns;
-        int setRow = 0;
-        int setCol = 0;
 
+        int row = getRow(event);
+        int col = getCol(event);
+
+        Log.e("row", "" + row);
+        Log.e("col", "" + col);
+        listener.onTouch(row, col);
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    private int getCol(MotionEvent event) {
+        int col = -1; //column that the user clicked
+        int userX = (int)event.getX();
+        int cellWidth = getWidth() / numColumns;
+        int setCol = 0;
+        for(int c = 1; c <= numColumns; c++){
+            //checks if user clicked is within bounds of cell
+            //if it is, it sets to the corresponding row
+            //if it isn't it keeps on looping
+            if(userX < (c * cellWidth)){
+                col = setCol;
+
+                //checks if column is set yet
+                if(col != -1){
+                    break;
+                }
+            }
+            setCol++;
+        }
+        return col;
+    }
+
+    private int getRow(MotionEvent event) {
+        int row = -1; //row that the user clicked
+        int userY = (int)event.getY();
+        int cellHeight = getHeight() / numRows;
+        int setRow = 0;
         //checks which row user clicked
         for(int r = 1; r <= numRows; r++){
             //checks if user clicked is within bounds of cell
@@ -153,29 +224,9 @@ public class BoardPixelGridView extends View {
             }
             setRow++;
         }
-        //checks which column user clicked
-        for(int c = 1; c <= numColumns; c++){
-            //checks if user clicked is within bounds of cell
-            //if it is, it sets to the corresponding row
-            //if it isn't it keeps on looping
-            if(userX < (c * cellWidth)){
-                col = setCol;
-
-                //checks if column is set yet
-                if(col != -1){
-                    break;
-                }
-            }
-            setCol++;
-        }
-
-        Log.e("cell height", "" + cellHeight);
-        Log.e("user", "" + userY);
-        Log.e("row", "" + row);
-        Log.e("col", "" + col);
-        listener.onTouch(row, col);
-        return gestureDetector.onTouchEvent(event);
+        return row;
     }
+
 
     //sets listener
     public void onGridTouchedListener(OnGridTouchedListener listener) {

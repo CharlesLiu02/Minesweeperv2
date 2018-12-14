@@ -36,7 +36,7 @@ public class MinesweeperFragment extends Fragment {
         board.onGridTouchedListener(new BoardPixelGridView.OnGridTouchedListener() {
             @Override
             public void onTouch(int row, int col) {
-                //TODO: processClick in Game class
+                //onClickReveal(row, col);
 
             }
         });
