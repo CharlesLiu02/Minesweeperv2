@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
@@ -44,13 +45,13 @@ public class BoardPixelGridView extends View {
     }
 
 
-    public void setSize(int numColumns, int numRows){
+    public void setSize(int numColumns, int numRows) {
         this.numColumns = numColumns;
         this.numRows = numRows;
     }
 
     //accounts for size, orientation changes to view
-    private void init(@Nullable AttributeSet set){
+    private void init(@Nullable AttributeSet set) {
         //declare instance variables here instead of onDraw() so that they are not continuously created
         //make paint drawing smoother
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -64,27 +65,35 @@ public class BoardPixelGridView extends View {
             public void onLongPress(MotionEvent e) {
                 Toast.makeText(getContext(), "Long click", Toast.LENGTH_SHORT).show();
 
-                //Drawable flag = ResourcesCompat.getDrawable(getResources(), R.drawable.minesweeper_flag, null);
-
                 int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
                 int left = 0, top = 0, right = 0, bottom = 0;
-//                for (int i = 0; i < numColumns; i++) {
-//                    for (int j = 0; j < numRows; j++) {
-//                        if (i == getRow(e) && j == getCol(e)) {
-//                            left = i * cellWidth;
-//                            top = j * cellHeight;
-//                            right = (i + 1) * cellWidth;
-//                            bottom = (j + 1) * cellHeight;
-//                        }
-//                    }
-//                }
+
                 left = cellWidth * getCol(e);
                 top = cellHeight * getRow(e);
                 right = cellWidth * (getCol(e) + 1);
                 bottom = cellHeight * (getRow(e) + 1);
 
-                //onLongPressed adds a flag item to the arraylist of items that needs to be drawn
-                items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
+                //checks if any flags are on grid
+                //if there are, then it checks to see whether or not he position the user clicked has a flag
+                //if it does, the flag is removed
+                //if it doesn't, a flag is added
+                if (items.size() != 0) {
+                    for (int i = 0; i < items.size(); i++) {
+                        if ((left == items.get(i).getLeft()) && (top == items.get(i).getTop())
+                                && (right == items.get(i).getRight()) && (bottom == items.get(i).getBottom())) {
+                            items.remove(i);
+                            break;
+                        } else {
+                            if(!isFlag(e)){
+                                //adds a flag item to the arraylist of items that needs to be drawn
+                                items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
+                }
                 invalidate();
             }
 
@@ -101,9 +110,31 @@ public class BoardPixelGridView extends View {
         });
     }
 
+    //checks if tile already has a flag drawn or not
+    private boolean isFlag(MotionEvent e) {
+        int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
+        int left = 0, top = 0, right = 0, bottom = 0;
+
+        left = cellWidth * getCol(e);
+        top = cellHeight * getRow(e);
+        right = cellWidth * (getCol(e) + 1);
+        bottom = cellHeight * (getRow(e) + 1);
+
+        for(int i = 0; i < items.size(); i++){
+            int itemLeft = items.get(i).getLeft();
+            int itemTop = items.get(i).getTop();
+            int itemRight = items.get(i).getRight();
+            int itemBottom = items.get(i).getBottom();
+            if(left == itemLeft && right == itemRight && top == itemTop && bottom == itemBottom){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     //TODO: figure out a way to draw the randomize bomb placement on the canvas
-        //idk how to do
+    //idk how to do
 
 
     //call postInvalidate() after updating canvas to redraw the view
@@ -123,7 +154,7 @@ public class BoardPixelGridView extends View {
             for (int j = 0; j < numRows; j++) {
                 if (i % 2 == 0) {
                     if (j % 2 == 0) {
-                        paint.setColor(Color.rgb(118,255,3));
+                        paint.setColor(Color.rgb(118, 255, 3));
 
                         //TODO: create tile obj and call draw method in the tile class on the object
                         //TODO: do canvas.tile.draw( variables )
@@ -131,20 +162,18 @@ public class BoardPixelGridView extends View {
 
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
-                    }
-                    else{
-                        paint.setColor(Color.rgb(118,212,3));
+                    } else {
+                        paint.setColor(Color.rgb(118, 212, 3));
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
                     }
-                }else{
+                } else {
                     if (j % 2 == 0) {
-                        paint.setColor(Color.rgb(118,212,3));
+                        paint.setColor(Color.rgb(118, 212, 3));
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
-                    }
-                    else{
-                        paint.setColor(Color.rgb(118,255,3));
+                    } else {
+                        paint.setColor(Color.rgb(118, 255, 3));
                         canvas.drawRect(i * cellWidth, j * cellHeight,
                                 (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
                     }
@@ -153,7 +182,7 @@ public class BoardPixelGridView extends View {
         }
 
         //checks which items it has to draw
-        for(int i = 0; i <items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
             Drawable item = ResourcesCompat.getDrawable(getResources(), items.get(i).getDrawableId(), null);
             int left = items.get(i).getLeft();
             int right = items.get(i).getRight();
@@ -162,11 +191,6 @@ public class BoardPixelGridView extends View {
             item.setBounds(left, top, right, bottom);
             item.draw(canvas);
         }
-
-
-
-
-//
     }
 
     //get the row and column that was clicked
@@ -184,18 +208,18 @@ public class BoardPixelGridView extends View {
 
     private int getCol(MotionEvent event) {
         int col = -1; //column that the user clicked
-        int userX = (int)event.getX();
+        int userX = (int) event.getX();
         int cellWidth = getWidth() / numColumns;
         int setCol = 0;
-        for(int c = 1; c <= numColumns; c++){
+        for (int c = 1; c <= numColumns; c++) {
             //checks if user clicked is within bounds of cell
             //if it is, it sets to the corresponding row
             //if it isn't it keeps on looping
-            if(userX < (c * cellWidth)){
+            if (userX < (c * cellWidth)) {
                 col = setCol;
 
                 //checks if column is set yet
-                if(col != -1){
+                if (col != -1) {
                     break;
                 }
             }
@@ -206,19 +230,19 @@ public class BoardPixelGridView extends View {
 
     private int getRow(MotionEvent event) {
         int row = -1; //row that the user clicked
-        int userY = (int)event.getY();
+        int userY = (int) event.getY();
         int cellHeight = getHeight() / numRows;
         int setRow = 0;
         //checks which row user clicked
-        for(int r = 1; r <= numRows; r++){
+        for (int r = 1; r <= numRows; r++) {
             //checks if user clicked is within bounds of cell
             //if it is, it sets to the corresponding row
             //if it isn't it keeps on looping
-            if(userY < (r * cellHeight)){
+            if (userY < (r * cellHeight)) {
                 row = setRow;
 
                 //checks if row is set yet
-                if(row != -1){
+                if (row != -1) {
                     break;
                 }
             }

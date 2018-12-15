@@ -4,7 +4,7 @@ public class Item {
     private int drawableId;
     private int left, right, top, bottom;
 
-    public Item(int drawableId, int left, int right, int top, int bottom) {
+    public Item(int drawableId, int left, int top, int right, int bottom) {
         this.drawableId = drawableId;
         this.left = left;
         this.right = right;
