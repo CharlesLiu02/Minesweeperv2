@@ -69,7 +69,6 @@ public class MinesweeperGame {
             }
         }
 
-
             if (x == true){
                 return true;
                 // prompt victory fragment screen
@@ -114,51 +113,46 @@ public class MinesweeperGame {
         //if surrounding tiles have bombs then:
 
 
-        public void onSingleTapClickReveal (int row, int col)
-        {
+        public void revealTileAndTilesAround(int row, int col) {
 
-            if (array[row][col].ifHasBomb() == true)
-            {
+            array[row][col].setNumber(calculateNumber(array[row][col]));
+            array[row][col].setRevealed(true);
+
+            for (int i = col - 1; i <= col + 1; i++) {
+                for (int j = row - 1; j <= row + 1; j++){
+
+                    if (calculateNumber(array[j][i]) == 0 && array[j][i].isRevealed() == false) {
+
+                        array[j][i].setNumber(0);
+                        array[j][i].setRevealed(true);
+                        revealTileAndTilesAround(j , i);
+
+                    }
+                    else{
+                        array[j][i].setNumber(calculateNumber(array[j][i]));
+                        array[j][i].setRevealed(true);
+                    }
+                    }
+                }
+            }
+
+
+        public void onSingleTapClickReveal (int row, int col) {
+
+            if (array[row][col].ifHasBomb() == true) {
+
                 gameLost();
+
             }
             else if (array[row][col].ifHasBomb() == false) {
-                array[row][col].setNumber(calculateNumber(array[row][col]));
-                array[row][col].setRevealed(true);
-                {
 
-                    for (int i = col - 1; i < col + 2; i++) {
-                        if (calculateNumber(array[row - 1][i]) == 0)
-                        {
-                            array[row - 1][i].setRevealed(true);
-                            array[row - 1][i].setHasFlag(false);
-                            array[row - 1][i].setHasBomb(false);
-                        }
-                        else{
-                            array[row - 1][i].setRevealed(false);
 
-                        }
-                    }
+                revealTileAndTilesAround(row , col);{
 
-                    for (int i = col - 1; i < col + 2; i++) {
-                        if (array[row + 1][i].ifHasBomb()) {
-
-                        }
-                    }
-
-                    if (array[row][col - 1].ifHasBomb()) {
-
-                    }
-
-                    if (array[row][col + 1].ifHasBomb()) {
-
-                    }
 
                 }
-
-
             }
         }
-
 
 
 
