@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 
 public class MinesweeperFragment extends Fragment {
     public BoardPixelGridView board;
-    public MinesweeperGame game;
+    public static MinesweeperGame game;
 
     //creates the view of the fragment
     //basically creates what is to be shown on the fragment screen
@@ -37,6 +37,7 @@ public class MinesweeperFragment extends Fragment {
             @Override
             public void onTouch(int row, int col) {
                 //onClickReveal(row, col);
+               game.onSingleTapClickReveal(row, col);
 
             }
         });
@@ -50,14 +51,17 @@ public class MinesweeperFragment extends Fragment {
         if(difficulty.equals("Easy")) {
             board.setSize(10, 10);
             game = new MinesweeperGame(10, 10);
+            game.randomizeBombs();
         }
         else if(difficulty.equals("Medium")){
             board.setSize(12, 12);
             game = new MinesweeperGame(12, 25);
+            game.randomizeBombs();
         }
-        else{
+        else {
             board.setSize(15, 15);
             game = new MinesweeperGame(15, 45);
+            game.randomizeBombs();
         }
         return rootView;
     }
