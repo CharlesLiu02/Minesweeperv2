@@ -95,6 +95,7 @@ public class BoardPixelGridView extends View {
                     items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
                 }
                 invalidate();
+
             }
 
             @Override
