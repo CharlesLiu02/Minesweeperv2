@@ -115,16 +115,21 @@ public class BoardPixelGridView extends View {
                 right = cellWidth * (getCol(e) + 1);
                 bottom = cellHeight * (getRow(e) + 1);
 
-                MinesweeperFragment.game.onSingleTapClickReveal(getRow(e), getCol(e));
                 Tile[][] array = MinesweeperFragment.game.getArray();
+
+                if (array[getRow(e)][getCol(e)].ifHasBomb() == true ) {
+
+                    items.add(new Item(R.drawable.bomb, left + (getCol(e) * cellWidth), top + (getRow(e) * cellHeight), right + (getCol(e) * cellWidth), bottom + (getRow(e) * cellWidth)));
+                }
+                else {
+
+                    MinesweeperFragment.game.onSingleTapClickReveal(getRow(e), getCol(e));
+
                 for(int i = 0; i < array.length; i++){
                     for(int j = 0; j < array.length;j++) {
-                        if (array[i][j].isRevealed()) {
-                            if (!isDrawn(e)) {
-                                 if (array[i][j].ifHasBomb()) {
-                                    items.add(new Item(R.drawable.bomb, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                }
-                                else if (array[i][j].getNumber() == 0) {
+                        if (array[i][j].isRevealed() == true) {
+                            if (!isDrawn(e)) {}
+                                if (array[i][j].getNumber() == 0) {
                                     items.add(new Item(R.drawable.minesweeper_0, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
                                 } else if (array[i][j].getNumber() == 1) {
                                     items.add(new Item(R.drawable.minesweeper_1, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));

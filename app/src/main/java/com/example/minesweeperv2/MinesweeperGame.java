@@ -9,21 +9,19 @@ import java.util.ArrayList;
 
 public class MinesweeperGame {
     private Tile[][] array;
-    private int numBombs;
-    private int virtualNumBombs;
+    private int virtualBombs;
     private int canvasSize;
 
     public MinesweeperGame(int canvasSize, int numBombs) {
         array = new Tile[canvasSize][canvasSize];
-        this.numBombs = numBombs;
-        virtualNumBombs = numBombs;
+          virtualBombs = numBombs;
         this.canvasSize = canvasSize;
         for (int i = 0; i < canvasSize; i++) {
             for (int j = 0; j < canvasSize; j++) {
                 array[i][j] = new Tile(i, j);
             }
         }
-
+    }
         // randomize the bombs
         //or if numBombs == 0, when there are no bombs left to place, then the constructor ends
 
@@ -36,29 +34,34 @@ public class MinesweeperGame {
         // array[i][j].setHasBomb(true);
         //numBombs--;
 
-    }
+
 
     public Tile[][] getArray() {
         return array;
     }
 
-    public void randomizeBombs(){
-        while (virtualNumBombs > 0) {
+    public void randomizeBombsAndSetNumbers() {
+        while ( virtualBombs > 0) {
             int x = (int) (Math.random() * canvasSize);
             int y = (int) (Math.random() * canvasSize);
             {
                 if (!array[x][y].ifHasBomb()) {
                     array[x][y].setHasBomb(true);
-                    virtualNumBombs--;
+                    virtualBombs--;
                 }
+            }
+        }
+
+        for (int i = 0; i < canvasSize; i++) {
+            for (int j = 0; j < canvasSize; j++) {
+                array[i][j].setNumber(calculateNumber(array[i][j]));
             }
         }
     }
 
-
     //checks if the game is lost and prompts the
 
-    public boolean gameWon() {
+    public boolean gameWon(){
 
         boolean x = true;
 
@@ -119,42 +122,37 @@ public class MinesweeperGame {
     //reveals the tile and tiles around it if needed
     public void revealTileAndTilesAround(int row, int col) {
 
-        array[row][col].setNumber(calculateNumber(array[row][col]));
         array[row][col].setRevealed(true);
-
         for (int i = col - 1; i <= col + 1; i++) {
             for (int j = row - 1; j <= row + 1; j++) {
 
-                if( i > 0 && i < canvasSize - 1 && j > 0 && j < canvasSize - 1) {
+                if( !(i < 0 || i > canvasSize - 1|| j < 0 || j > canvasSize - 1)) {
                     if (calculateNumber(array[j][i]) == 0 && array[j][i].isRevealed() == false) {
 
-                        array[j][i].setNumber(0);
                         array[j][i].setRevealed(true);
                         revealTileAndTilesAround(j, i);
 
                     } else {
-                        array[j][i].setNumber(calculateNumber(array[j][i]));
                         array[j][i].setRevealed(true);
                     }
                 }
             }
         }
+
+
     }
 
     // revealing a square on a single click
 
     public void onSingleTapClickReveal(int row, int col) {
 
-        if (array[row][col].ifHasBomb() == true && array[row][col].ifHasFlag() == false) {
 
-            gameLost();
-
-        } else if (array[row][col].ifHasBomb() == false && array[row][col].ifHasFlag() == false) {
-
+        if (array[row][col].ifHasFlag() == false) {
             revealTileAndTilesAround(row, col);
-
         }
+
     }
+
 
 
     //Number(Tile tile) method to calculate the number image that should be displayed
@@ -187,26 +185,26 @@ public class MinesweeperGame {
         return count;
     }
 
-
-    public ArrayList sendCoordinatesAndNumbers(Tile[][] array) {
-        ArrayList List = new ArrayList();
-
-        this.array = array;
-
-        for (int i = 0; i < canvasSize; i++) {
-            for (int j = 0; j < canvasSize; j++) {
-                if(array[i][j].isRevealed() == true)
-                {
-                    List.add(array[i][j].getRow());
-                    List.add(array[i][j].getCol());
-                    List.add(array[i][j].getNumber());
-                }
-            }
-
-
-        }
-        return List;
-    }
+    // not used
+//    public ArrayList sendCoordinatesAndNumbers(Tile[][] array) {
+//        ArrayList List = new ArrayList();
+//
+//        this.array = array;
+//
+//        for (int i = 0; i < canvasSize; i++) {
+//            for (int j = 0; j < canvasSize; j++) {
+//                if(array[i][j].isRevealed() == true)
+//                {
+//                    List.add(array[i][j].getRow());
+//                    List.add(array[i][j].getCol());
+//                    List.add(array[i][j].getNumber());
+//                }
+//            }
+//
+//
+//        }
+//        return List;
+//    }
 
 }
 
