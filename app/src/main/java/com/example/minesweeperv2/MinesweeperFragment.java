@@ -1,4 +1,4 @@
-//shows the actual minesweeper game with the board
+//shows the actual minesweeper game with the gameView
 
 package com.example.minesweeperv2;
 
@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class MinesweeperFragment extends Fragment {
-    public BoardPixelGridView board;
+    public BoardPixelGridView gameView;
     public static MinesweeperGame game;
 
     //creates the view of the fragment
@@ -31,9 +31,9 @@ public class MinesweeperFragment extends Fragment {
         //inflate view in which view will be rendered by creating view object in memory
         //when new BoardPixelGridView is created it automatically calls onDraw()
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
-        board = rootView.findViewById(R.id.boardPixelGridView);
-        //implements our own listener for the board
-        board.onGridTouchedListener(new BoardPixelGridView.OnGridTouchedListener() {
+        gameView = rootView.findViewById(R.id.boardPixelGridView);
+        //implements our own listener for the gameView
+        gameView.onGridTouchedListener(new BoardPixelGridView.OnGridTouchedListener() {
             @Override
             public void onTouch(int row, int col) {
                 //onClickReveal(row, col);
@@ -46,28 +46,29 @@ public class MinesweeperFragment extends Fragment {
         //checks the KEY
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String difficulty = sharedPref.getString(StartScreenFragment.KEY, "Easy");
-        //depending on difficulty, sets size of the board
+        //depending on difficulty, sets size of the gameView
         //creates a new game and sets size of the game
         if(difficulty.equals("Easy")) {
-            board.setSize(10, 10);
+            gameView.setSize(10, 10);
             game = new MinesweeperGame(10, 10);
             game.randomizeBombs();
+            gameView.setBoard(game.getArray());
         }
         else if(difficulty.equals("Medium")){
-            board.setSize(12, 12);
+            gameView.setSize(12, 12);
             game = new MinesweeperGame(12, 25);
             game.randomizeBombs();
         }
         else {
-            board.setSize(15, 15);
+            gameView.setSize(15, 15);
             game = new MinesweeperGame(15, 45);
             game.randomizeBombs();
         }
         return rootView;
     }
 
-    public BoardPixelGridView getBoard() {
-        return board;
+    public BoardPixelGridView getGameView() {
+        return gameView;
     }
 
     //adding options to options menu

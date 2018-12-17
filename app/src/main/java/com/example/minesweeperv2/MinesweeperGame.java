@@ -3,7 +3,6 @@
 package com.example.minesweeperv2;
 
 import android.graphics.Canvas;
-
 import java.sql.Array;
 import java.util.ArrayList;
 

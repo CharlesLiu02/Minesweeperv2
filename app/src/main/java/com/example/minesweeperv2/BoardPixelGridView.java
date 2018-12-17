@@ -25,11 +25,16 @@ public class BoardPixelGridView extends View {
     private OnGridTouchedListener listener = null;
     private GestureDetector gestureDetector = null;
     private ArrayList<Item> items;
+    private Tile[][] board;
 
     public BoardPixelGridView(Context context) {
         super(context);
 
         init(null);
+    }
+
+    public void setBoard(Tile[][] board) {
+        this.board = board;
     }
 
     public BoardPixelGridView(Context context, @Nullable AttributeSet attrs) {
@@ -109,14 +114,14 @@ public class BoardPixelGridView extends View {
 
                 int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
                 int left = 0, top = 0, right = 0, bottom = 0;
-
+/*
                 left = cellWidth * getCol(e);
                 top = cellHeight * getRow(e);
                 right = cellWidth * (getCol(e) + 1);
-                bottom = cellHeight * (getRow(e) + 1);
+                bottom = cellHeight * (getRow(e) + 1);*/
 
                 MinesweeperFragment.game.onSingleTapClickReveal(getRow(e), getCol(e));
-                Tile[][] array = MinesweeperFragment.game.getArray();
+                /*Tile[][] array = MinesweeperFragment.game.getArray();
                 for(int i = 0; i < array.length; i++){
                     for(int j = 0; j < array.length;j++) {
                         if (array[i][j].isRevealed()) {
@@ -146,7 +151,7 @@ public class BoardPixelGridView extends View {
                             }
                         }
                     }
-                }
+                }*/
                 invalidate();
 
                 return true;
@@ -209,10 +214,16 @@ public class BoardPixelGridView extends View {
         //TODO: set the canvas passed as the canvas instance variable
         //canvas = this.canvas
 
-        int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
-
-        if (numColumns == 0 || numRows == 0) {
+        if (board.length == 0 || board[0].length == 0) {
             return;
+        }
+
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                if (!board[row][col].isRevealed()) {
+                    //TODO: draw a green
+                } else if ()
+            }
         }
 
         for (int i = 0; i < numColumns; i++) {
