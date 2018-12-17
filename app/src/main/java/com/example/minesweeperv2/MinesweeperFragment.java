@@ -1,4 +1,4 @@
-//shows the actual minesweeper game with the gameView
+//shows the actual minesweeper game with the board
 
 package com.example.minesweeperv2;
 
@@ -37,7 +37,7 @@ public class MinesweeperFragment extends Fragment {
             @Override
             public void onTouch(int row, int col) {
                 //onClickReveal(row, col);
-               game.onSingleTapClickReveal(row, col);
+                game.onSingleTapClickReveal(row, col);
 
             }
         });
