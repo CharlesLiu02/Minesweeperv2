@@ -1,6 +1,8 @@
 package com.example.minesweeperv2;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,13 +16,14 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class BoardPixelGridView extends View {
     private Paint paint;
-    private int numColumns, numRows;
+    private int numColumns, numRows, cellHeight, cellWidth;
     private Canvas canvas;
     private OnGridTouchedListener listener = null;
     private GestureDetector gestureDetector = null;
@@ -61,6 +64,8 @@ public class BoardPixelGridView extends View {
         //make paint drawing smoother
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         items = new ArrayList<>();
+        cellHeight = getHeight() / numRows;
+        cellWidth = getWidth() / numColumns;
 
         //gesture detector is used to handle long and short clicks
         setClickable(true);
@@ -70,7 +75,6 @@ public class BoardPixelGridView extends View {
             public void onLongPress(MotionEvent e) {
                 Toast.makeText(getContext(), "Long click", Toast.LENGTH_SHORT).show();
 
-                int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
                 int left = 0, top = 0, right = 0, bottom = 0;
 
                 left = cellWidth * getCol(e);
@@ -89,7 +93,7 @@ public class BoardPixelGridView extends View {
                             items.remove(i);
                             break;
                         } else {
-                            if(!isFlag(e)){
+                            if (!isFlag(e)) {
                                 //adds a flag item to the arraylist of items that needs to be drawn
                                 items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
                                 break;
@@ -168,12 +172,12 @@ public class BoardPixelGridView extends View {
         right = cellWidth * (getCol(e) + 1);
         bottom = cellHeight * (getRow(e) + 1);
 
-        for(int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
             int itemLeft = items.get(i).getLeft();
             int itemTop = items.get(i).getTop();
             int itemRight = items.get(i).getRight();
             int itemBottom = items.get(i).getBottom();
-            if(left == itemLeft && right == itemRight && top == itemTop && bottom == itemBottom){
+            if (left == itemLeft && right == itemRight && top == itemTop && bottom == itemBottom) {
                 return true;
             }
         }
@@ -190,12 +194,12 @@ public class BoardPixelGridView extends View {
         right = cellWidth * (getCol(e) + 1);
         bottom = cellHeight * (getRow(e) + 1);
 
-        for(int i = 0; i < items.size(); i++){
+        for (int i = 0; i < items.size(); i++) {
             int itemLeft = items.get(i).getLeft();
             int itemTop = items.get(i).getTop();
             int itemRight = items.get(i).getRight();
             int itemBottom = items.get(i).getBottom();
-            if(left == itemLeft && right == itemRight && top == itemTop && bottom == itemBottom){
+            if (left == itemLeft && right == itemRight && top == itemTop && bottom == itemBottom) {
                 return true;
             }
         }
@@ -214,6 +218,8 @@ public class BoardPixelGridView extends View {
         //TODO: set the canvas passed as the canvas instance variable
         //canvas = this.canvas
 
+        int cellHeight = getHeight() / numRows, cellWidth = getWidth() / numColumns;
+
         if (board.length == 0 || board[0].length == 0) {
             return;
         }
@@ -222,37 +228,14 @@ public class BoardPixelGridView extends View {
             for (int col = 0; col < board[0].length; col++) {
                 if (!board[row][col].isRevealed()) {
                     //TODO: draw a green
-                } else if ()
-            }
-        }
-
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
-                if (i % 2 == 0) {
-                    if (j % 2 == 0) {
-                        paint.setColor(Color.rgb(118, 255, 3));
-
-                        //TODO: create tile obj and call draw method in the tile class on the object
-                        //TODO: do canvas.tile.draw( variables )
-                        /*Tile tile = new Tile(i,j);*/
-
-                        canvas.drawRect(i * cellWidth, j * cellHeight,
-                                (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
-                    } else {
-                        paint.setColor(Color.rgb(118, 212, 3));
-                        canvas.drawRect(i * cellWidth, j * cellHeight,
-                                (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
-                    }
-                } else {
-                    if (j % 2 == 0) {
-                        paint.setColor(Color.rgb(118, 212, 3));
-                        canvas.drawRect(i * cellWidth, j * cellHeight,
-                                (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
-                    } else {
-                        paint.setColor(Color.rgb(118, 255, 3));
-                        canvas.drawRect(i * cellWidth, j * cellHeight,
-                                (i + 1) * cellWidth, (j + 1) * cellHeight, paint);
-                    }
+                    drawGreen(row, col);
+                }
+                else if (board[row][col].getNumber() == 0){
+                    //need to draw numbers
+//                    ImageView imageView = findViewById(R.id.boardPixelGridView);
+//                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.minesweeper_0);
+//                    imageView.setImageBitmap(bitmap);
+//                    canvas.drawBitmap(bitmap, );
                 }
             }
         }
@@ -268,6 +251,62 @@ public class BoardPixelGridView extends View {
             item.draw(canvas);
         }
     }
+
+    private void drawGreen(int row, int col) {
+        if (row % 2 == 0) {
+            if (col % 2 == 0) {
+                paint.setColor(Color.rgb(118, 255, 3));
+                canvas.drawRect(row * cellWidth, col * cellHeight,
+                        (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+            } else {
+                paint.setColor(Color.rgb(118, 212, 3));
+                canvas.drawRect(row * cellWidth, col * cellHeight,
+                        (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+            }
+        } else {
+            if (col % 2 == 0) {
+                paint.setColor(Color.rgb(118, 212, 3));
+                canvas.drawRect(row * cellWidth, col * cellHeight,
+                        (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+            } else {
+                paint.setColor(Color.rgb(118, 255, 3));
+                canvas.drawRect(row * cellWidth, col * cellHeight,
+                        (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+            }
+        }
+    }
+
+//        for (row = 0; row < numColumns; row++) {
+//            for (col = 0; col < numRows; col++) {
+//                if (row % 2 == 0) {
+//                    if (col % 2 == 0) {
+//                        paint.setColor(Color.rgb(118, 255, 3));
+//
+//                        //TODO: create tile obj and call draw method in the tile class on the object
+//                        //TODO: do canvas.tile.draw( variables )
+//                        /*Tile tile = new Tile(i,j);*/
+//
+//                        canvas.drawRect(row * cellWidth, col * cellHeight,
+//                                (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+//                    } else {
+//                        paint.setColor(Color.rgb(118, 212, 3));
+//                        canvas.drawRect(row * cellWidth, col * cellHeight,
+//                                (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+//                    }
+//                } else {
+//                    if (col % 2 == 0) {
+//                        paint.setColor(Color.rgb(118, 212, 3));
+//                        canvas.drawRect(row * cellWidth, col * cellHeight,
+//                                (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+//                    } else {
+//                        paint.setColor(Color.rgb(118, 255, 3));
+//                        canvas.drawRect(row * cellWidth, col * cellHeight,
+//                                (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+//                    }
+//                }
+//            }
+//        }
+
 
     //get the row and column that was clicked
     @Override
@@ -334,8 +373,8 @@ public class BoardPixelGridView extends View {
         this.listener = listener;
     }
 
-    //create own interface to handle clicks for grid
-    public interface OnGridTouchedListener {
-        void onTouch(int row, int col);
-    }
+//create own interface to handle clicks for grid
+public interface OnGridTouchedListener {
+    void onTouch(int row, int col);
+}
 }
