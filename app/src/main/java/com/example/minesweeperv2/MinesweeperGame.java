@@ -53,7 +53,11 @@ public class MinesweeperGame {
 
         for (int i = 0; i < canvasSize; i++) {
             for (int j = 0; j < canvasSize; j++) {
-                array[i][j].setNumber(calculateNumber(array[i][j]));
+
+                if(array[i][j].ifHasBomb()== false);
+                {
+                    array[i][j].setNumber(calculateNumber(array[i][j]));
+                }
             }
         }
     }
