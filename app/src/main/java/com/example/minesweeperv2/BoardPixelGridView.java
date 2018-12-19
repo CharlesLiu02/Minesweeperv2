@@ -73,14 +73,13 @@ public class BoardPixelGridView extends View {
             public void onLongPress(MotionEvent e) {
                 Toast.makeText(getContext(), "Long click", Toast.LENGTH_SHORT).show();
 
-                int left = 0, top = 0, right = 0, bottom = 0;
                 int cellHeight = getHeight() / numRows;
                 int cellWidth = getWidth() / numColumns;
 
-                left = cellWidth * getCol(e);
-                top = cellHeight * getRow(e);
-                right = cellWidth * (getCol(e) + 1);
-                bottom = cellHeight * (getRow(e) + 1);
+                int left = cellWidth * getCol(e);
+                int top = cellHeight * getRow(e);
+                int right = cellWidth * (getCol(e) + 1);
+                int bottom = cellHeight * (getRow(e) + 1);
 
                 //checks if any flags are on grid
                 //if there are, then it checks to see whether or not he position the user clicked has a flag
@@ -117,12 +116,11 @@ public class BoardPixelGridView extends View {
                 Toast.makeText(getContext(), "short click", Toast.LENGTH_SHORT).show();
 
                 int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
-                int left = 0, top = 0, right = 0, bottom = 0;
 
-                left = cellWidth * getCol(e);
-                top = cellHeight * getRow(e);
-                right = cellWidth * (getCol(e) + 1);
-                bottom = cellHeight * (getRow(e) + 1);
+                int left = cellWidth * getCol(e);
+                int top = cellHeight * getRow(e);
+                int right = cellWidth * (getCol(e) + 1);
+                int bottom = cellHeight * (getRow(e) + 1);
 
                 for (int row = 0; row < board.length; row++) {
                     for (int col = 0; col < board[row].length; col++) {
@@ -247,7 +245,7 @@ public class BoardPixelGridView extends View {
         }
 
         for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[0].length; col++) {
+            for (int col = 0; col < board[row].length; col++) {
                 if (!board[row][col].isRevealed()) {
                     //TODO: draw a green
                     if (row % 2 == 0) {
@@ -346,6 +344,7 @@ public class BoardPixelGridView extends View {
         Log.e("row", "" + row);
         Log.e("col", "" + col);
         listener.onTouch(row, col);
+        listener.onLongTouch(row, col);
 
         return gestureDetector.onTouchEvent(event);
     }
@@ -404,5 +403,6 @@ public class BoardPixelGridView extends View {
     //create own interface to handle clicks for grid
     public interface OnGridTouchedListener {
         void onTouch(int row, int col);
+        void onLongTouch(int row, int col);
     }
 }

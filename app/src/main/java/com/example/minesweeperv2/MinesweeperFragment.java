@@ -39,6 +39,11 @@ public class MinesweeperFragment extends Fragment {
                 game.onSingleTapClickReveal(row, col);
 
             }
+
+            @Override
+            public void onLongTouch(int row, int col) {
+
+            }
         });
 
         //receives information from StartScreenFragment about difficulty value
