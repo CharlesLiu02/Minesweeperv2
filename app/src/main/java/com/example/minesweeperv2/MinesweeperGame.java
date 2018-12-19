@@ -44,8 +44,8 @@ public class MinesweeperGame {
             int x = (int) (Math.random() * canvasSize);
             int y = (int) (Math.random() * canvasSize);
             {
-                if (!array[x][y].ifHasBomb()) {
-                    array[x][y].setHasBomb(true);
+                if (!array[y][x].ifHasBomb()) {
+                    array[y][x].setHasBomb(true);
                     virtualBombs--;
                 }
             }
