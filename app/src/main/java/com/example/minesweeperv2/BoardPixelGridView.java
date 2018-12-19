@@ -124,8 +124,8 @@ public class BoardPixelGridView extends View {
                 right = cellWidth * (getCol(e) + 1);
                 bottom = cellHeight * (getRow(e) + 1);
 
-                for (int row = 0; row <= board.length; row++) {
-                    for (int col = 0; col <= board[row].length; col++) {
+                for (int row = 0; row < board.length; row++) {
+                    for (int col = 0; col < board[row].length; col++) {
                         if(board[row][col].isRevealed()) {
                             if (board[row][col].ifHasBomb()) {
                                 items.add(new Item(R.drawable.bomb, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
