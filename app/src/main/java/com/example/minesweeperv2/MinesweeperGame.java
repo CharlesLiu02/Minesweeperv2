@@ -166,13 +166,13 @@ public class MinesweeperGame {
         int col = tile.getCol();
 
         for (int i = col - 1; i < col + 2; i++) {
-            if (((i > 0 && i < canvasSize - 1) && row > 0) && array[row - 1][i].ifHasBomb()) {
+            if (((i >= 0 && i <= canvasSize - 1) && row > 0) && array[row - 1][i].ifHasBomb()) {
                 count++;
             }
         }
 
         for (int i = col - 1; i < col + 2; i++) {
-            if (((i > 0 && i < canvasSize - 1) && row < canvasSize - 1) && array[row + 1][i].ifHasBomb()) {
+            if (((i >= 0 && i <= canvasSize - 1) && row < canvasSize - 1) && array[row + 1][i].ifHasBomb()) {
                 count++;
             }
         }
