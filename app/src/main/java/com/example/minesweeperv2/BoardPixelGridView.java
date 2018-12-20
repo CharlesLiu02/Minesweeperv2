@@ -97,17 +97,20 @@ public class BoardPixelGridView extends View {
                         if ((left == items.get(i).getLeft()) && (top == items.get(i).getTop())
                                 && (right == items.get(i).getRight()) && (bottom == items.get(i).getBottom())) {
                             items.remove(i);
+                            board[r][c].setHasFlag(false);
                             break;
                         } else {
                             if (!isFlag(event)) {
                                 //adds a flag item to the arraylist of items that needs to be drawn
                                 items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
+                                board[r][c].setHasFlag(true);
                                 break;
                             }
                         }
                     }
                 } else {
                     items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
+                    board[r][c].setHasFlag(true);
                 }
                 invalidate();
             }
