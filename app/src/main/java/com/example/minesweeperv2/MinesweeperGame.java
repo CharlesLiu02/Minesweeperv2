@@ -23,22 +23,12 @@ public class MinesweeperGame {
             }
         }
     }
-    // randomize the bombs
-    //or if numBombs == 0, when there are no bombs left to place, then the constructor ends
-
-
-    // probability method for the bombs
-    // if (!array[i][j].ifHasBomb()) {
-    //int x = (int) (Math.random() * canvasSize);
-    // if (x == 1) {
-    // array[i][j].setHasBomb(true);
-    //numBombs--;
-
 
     public Tile[][] getArray() {
         return array;
     }
 
+    //randomize the bombs
     public void randomizeBombsAndSetNumbers() {
         while (virtualBombs > 0) {
             int x = (int) (Math.random() * canvasSize);
