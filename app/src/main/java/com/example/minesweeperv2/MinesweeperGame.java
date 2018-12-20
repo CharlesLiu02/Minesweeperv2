@@ -185,11 +185,7 @@ public class MinesweeperGame {
         {
             for (int i = col + 1; i > col; i--) {
                 if (!(i > canvasSize - 1)) {
-                    if (array[row][col].ifHasBomb()) {
-                        revealAllBombs();
-                        gameLost();
-                        break;
-                    } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                  if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
                         array[row][i].setRevealed(true);
                         revealTileAndTilesAround(row, i);
 
@@ -201,11 +197,7 @@ public class MinesweeperGame {
 
         for (int i = row + 1; i > row; i--) {
             if (!(i > canvasSize - 1)) {
-                if (array[row][col].ifHasBomb()) {
-                    revealAllBombs();
-                    gameLost();
-                    break;
-                } else if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
                     array[i][col].setRevealed(true);
                     revealTileAndTilesAround(i, col);
 
@@ -216,11 +208,7 @@ public class MinesweeperGame {
         }
         for (int i = col - 1; i < col; i++) {
             if (!(i < 0)) {
-                if (array[row][col].ifHasBomb()) {
-                    revealAllBombs();
-                    gameLost();
-                    break;
-                } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+          if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
                     array[row][i].setRevealed(true);
                     revealTileAndTilesAround(row, i);
 
@@ -232,11 +220,7 @@ public class MinesweeperGame {
 
         for (int i = row - 1; i < row; i++) {
             if (!(i < 0)) {
-                if (array[row][col].ifHasBomb()) {
-                    revealAllBombs();
-                    gameLost();
-                    break;
-                } else if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
                     array[i][col].setRevealed(true);
                     revealTileAndTilesAround(i, col);
 
