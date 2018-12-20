@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frag_start_screen_choose_difficulty"
+        app:layout_constraintTop_toBottomOf="@+id/textView_frag_start_screen_choose_difficulty"
         app:layout_constraintVertical_bias="0.719" />
 
     <Button
@@ -93,7 +93,7 @@
         app:layout_constraintGuide_begin="390dp" />
 
     <TextView
-        android:id="@+id/frag_start_screen_choose_difficulty"
+        android:id="@+id/textView_frag_start_screen_choose_difficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

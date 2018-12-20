@@ -2,21 +2,15 @@
 
 package com.example.minesweeperv2;
 
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
             //if method returns true then the endScreenDialog is shown
             //else do nothing
 
-        //when on creating the activity, then create the dialog
+        //when game done, then create the dialog
+//        if (MinesweeperFragment.getGame().gameWon()) {
+//            return;
+//        }
         showResultsDialog();
     }
 
@@ -45,13 +42,10 @@ public class MainActivity extends AppCompatActivity {
         View view = inflater.inflate(R.layout.fragment_end_screen, null);
 
         //initalize variables
-        TextView textView = view.findViewById(R.id.textView);
+        TextView textView = view.findViewById(R.id.textView_frag_end_screen_game_over);
 
         alertDialogBuilder.setView(view);
-        alertDialogBuilder.setTitle("End Game");
 
         alertDialogBuilder.create().show();
     }
-
-
 }

@@ -22,16 +22,13 @@ import java.util.ArrayList;
 public class BoardPixelGridView extends View {
     private Paint paint;
     private int numColumns, numRows;
-    private Canvas canvas;
     private OnGridTouchedListener listener = null;
     private GestureDetector gestureDetector = null;
     private ArrayList<Item> items;
     private Tile[][] board;
-    private Item[][] arrayItems;
 
     public BoardPixelGridView(Context context) {
         super(context);
-
         init(null);
     }
 
@@ -41,13 +38,11 @@ public class BoardPixelGridView extends View {
 
     public BoardPixelGridView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
         init(attrs);
     }
 
     public BoardPixelGridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         init(attrs);
     }
 
@@ -77,8 +72,6 @@ public class BoardPixelGridView extends View {
                 Log.e("col", "" + c);
 
                 listener.onLongTouch(r, c);
-
-                Toast.makeText(getContext(), "Long click", Toast.LENGTH_SHORT).show();
 
                 int cellHeight = getHeight() / numRows;
                 int cellWidth = getWidth() / numColumns;
@@ -131,7 +124,7 @@ public class BoardPixelGridView extends View {
                 listener.onTouch(r, c);
                 Log.e("onsingletapup", "onsingletapup");
 
-                Toast.makeText(getContext(), "short click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "short click", Toast.LENGTH_SHORT).show();
 
                 int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
 
@@ -172,7 +165,6 @@ public class BoardPixelGridView extends View {
                     }
                 }
                 invalidate();
-
                 return true;
             }
         });
@@ -307,7 +299,6 @@ public class BoardPixelGridView extends View {
         }
         return row;
     }
-
 
     //sets listener
     public void onGridTouchedListener(OnGridTouchedListener listener) {

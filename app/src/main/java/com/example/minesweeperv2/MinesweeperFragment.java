@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,11 +17,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class MinesweeperFragment extends Fragment {
     public BoardPixelGridView gameView;
     public MinesweeperGame game;
 
+    public MinesweeperGame getGame() {
+        return game;
+    }
     //creates the view of the fragment
     //basically creates what is to be shown on the fragment screen
     @Nullable
@@ -76,7 +81,9 @@ public class MinesweeperFragment extends Fragment {
             gameView.setBoard(game.getArray());
         }
         return rootView;
+
     }
+
 
     public BoardPixelGridView getGameView() {
         return gameView;
