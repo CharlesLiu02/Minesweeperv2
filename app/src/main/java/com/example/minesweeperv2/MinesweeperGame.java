@@ -63,8 +63,10 @@ public class MinesweeperGame {
                     if (array[i][j].ifHasFlag() == true) {
 
                         x = true;
+
                     } else {
-                return false;
+
+                        return false;
 
                     }
                 }
@@ -74,11 +76,13 @@ public class MinesweeperGame {
 
         if (x == true) {
             revealEverything();
-            return true;
+
             // prompt victory fragment screen
-            //continue game
+
         }
-        return true;
+        //continue game
+     return true;
+
     }
 
     private void revealEverything() {
