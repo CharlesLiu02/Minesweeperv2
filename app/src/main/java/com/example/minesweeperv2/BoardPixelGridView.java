@@ -1,8 +1,6 @@
 package com.example.minesweeperv2;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,7 +12,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,6 +26,7 @@ public class BoardPixelGridView extends View {
     private GestureDetector gestureDetector = null;
     private ArrayList<Item> items;
     private Tile[][] board;
+    private Item[][] arrayItems;
 
     public BoardPixelGridView(Context context) {
         super(context);
@@ -70,16 +68,24 @@ public class BoardPixelGridView extends View {
         setFocusable(true);
         gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
-            public void onLongPress(MotionEvent e) {
+            public void onLongPress(MotionEvent event) {
+                int r = getRow(event);
+                int c = getCol(event);
+
+                Log.e("row", "" + r);
+                Log.e("col", "" + c);
+
+                listener.onLongTouch(r, c);
+
                 Toast.makeText(getContext(), "Long click", Toast.LENGTH_SHORT).show();
 
                 int cellHeight = getHeight() / numRows;
                 int cellWidth = getWidth() / numColumns;
 
-                int left = cellWidth * getCol(e);
-                int top = cellHeight * getRow(e);
-                int right = cellWidth * (getCol(e) + 1);
-                int bottom = cellHeight * (getRow(e) + 1);
+                int left = cellWidth * getCol(event);
+                int top = cellHeight * getRow(event);
+                int right = cellWidth * (getCol(event) + 1);
+                int bottom = cellHeight * (getRow(event) + 1);
 
                 //checks if any flags are on grid
                 //if there are, then it checks to see whether or not he position the user clicked has a flag
@@ -92,7 +98,7 @@ public class BoardPixelGridView extends View {
                             items.remove(i);
                             break;
                         } else {
-                            if (!isFlag(e)) {
+                            if (!isFlag(event)) {
                                 //adds a flag item to the arraylist of items that needs to be drawn
                                 items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
                                 break;
@@ -103,7 +109,6 @@ public class BoardPixelGridView extends View {
                     items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
                 }
                 invalidate();
-
             }
 
             @Override
@@ -112,21 +117,31 @@ public class BoardPixelGridView extends View {
             }
 
             @Override
-            public boolean onSingleTapUp(MotionEvent e) {
+            public boolean onSingleTapConfirmed(MotionEvent event) {
+                int r = getRow(event);
+                int c = getCol(event);
+
+                Log.e("row", "" + r);
+                Log.e("col", "" + c);
+
+                listener.onTouch(r, c);
+                Log.e("onsingletapup", "onsingletapup");
+
                 Toast.makeText(getContext(), "short click", Toast.LENGTH_SHORT).show();
 
                 int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
 
-                int left = cellWidth * getCol(e);
-                int top = cellHeight * getRow(e);
-                int right = cellWidth * (getCol(e) + 1);
-                int bottom = cellHeight * (getRow(e) + 1);
+                int left = cellWidth * getCol(event);
+                int top = cellHeight * getRow(event);
+                int right = cellWidth * (getCol(event) + 1);
+                int bottom = cellHeight * (getRow(event) + 1);
 
                 for (int row = 0; row < board.length; row++) {
                     for (int col = 0; col < board[row].length; col++) {
                         if(board[row][col].isRevealed()) {
                             if (board[row][col].ifHasBomb()) {
                                 items.add(new Item(R.drawable.bomb, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                Log.e("bomb", "bomb");
                             } else if (board[row][col].getNumber() == 0) {
                                 items.add(new Item(R.drawable.minesweeper_0, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
                             } else if (board[row][col].getNumber() == 1) {
@@ -149,38 +164,6 @@ public class BoardPixelGridView extends View {
                         }
                     }
                 }
-
-                /*Tile[][] array = MinesweeperFragment.game.getArray();
-                for(int i = 0; i < array.length; i++){
-                    for(int j = 0; j < array.length;j++) {
-                        if (array[i][j].isRevealed()) {
-                            if (!isDrawn(e)) {
-                                 if (array[i][j].ifHasBomb()) {
-                                    items.add(new Item(R.drawable.bomb, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                }
-                                else if (array[i][j].getNumber() == 0) {
-                                    items.add(new Item(R.drawable.minesweeper_0, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                } else if (array[i][j].getNumber() == 1) {
-                                    items.add(new Item(R.drawable.minesweeper_1, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                } else if (array[i][j].getNumber() == 2) {
-                                    items.add(new Item(R.drawable.minesweeper_2, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                } else if (array[i][j].getNumber() == 3) {
-                                    items.add(new Item(R.drawable.minesweeper_3, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                } else if (array[i][j].getNumber() == 4) {
-                                    items.add(new Item(R.drawable.minesweeper_4, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                } else if (array[i][j].getNumber() == 5) {
-                                    items.add(new Item(R.drawable.minesweeper_5, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                } else if (array[i][j].getNumber() == 6) {
-                                    items.add(new Item(R.drawable.minesweeper_6, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                } else if (array[i][j].getNumber() == 7) {
-                                    items.add(new Item(R.drawable.minesweeper_7, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                } else if (array[i][j].getNumber() == 8) {
-                                    items.add(new Item(R.drawable.minesweeper_8, left + (j * cellWidth), top + (i * cellHeight), right + (j * cellWidth), bottom + (i * cellWidth)));
-                                }
-                            }
-                        }
-                    }
-                }*/
                 invalidate();
 
                 return true;
@@ -243,7 +226,6 @@ public class BoardPixelGridView extends View {
         if (board.length == 0 || board[0].length == 0) {
             return;
         }
-
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 if (!board[row][col].isRevealed()) {
@@ -270,6 +252,8 @@ public class BoardPixelGridView extends View {
                         }
                     }
                 }
+            }
+        }
 
 //                else if (board[row][col].getNumber() == 0){
 //                    //need to draw numbers
@@ -278,8 +262,8 @@ public class BoardPixelGridView extends View {
 ////                    imageView.setImageBitmap(bitmap);
 ////                    canvas.drawBitmap(bitmap, );
 //                }
-            }
-        }
+//            }
+//        }
         for (int i = 0; i < items.size(); i++) {
             Drawable item = ResourcesCompat.getDrawable(getResources(), items.get(i).getDrawableId(), null);
             int left = items.get(i).getLeft();
@@ -301,6 +285,7 @@ public class BoardPixelGridView extends View {
 //            item.draw(canvas);
 //        }
     }
+
 
 //        for (row = 0; row < numColumns; row++) {
 //            for (col = 0; col < numRows; col++) {
@@ -338,14 +323,7 @@ public class BoardPixelGridView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        int row = getRow(event);
-        int col = getCol(event);
-
-        Log.e("row", "" + row);
-        Log.e("col", "" + col);
-        listener.onTouch(row, col);
-        listener.onLongTouch(row, col);
-
+        this.gestureDetector.onTouchEvent(event);
         return gestureDetector.onTouchEvent(event);
     }
 

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,13 +37,14 @@ public class MinesweeperFragment extends Fragment {
         gameView.onGridTouchedListener(new BoardPixelGridView.OnGridTouchedListener() {
             @Override
             public void onTouch(int row, int col) {
+                Log.e("ontouch", "ontouch");
                 game.onSingleTapClickReveal(row, col);
 
             }
 
             @Override
             public void onLongTouch(int row, int col) {
-
+                Log.e("onlongtouch", "onlongtouch");
             }
         });
 

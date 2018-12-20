@@ -3,6 +3,8 @@
 package com.example.minesweeperv2;
 
 import android.graphics.Canvas;
+import android.util.Log;
+
 import java.sql.Array;
 import java.util.ArrayList;
 
@@ -13,7 +15,7 @@ public class MinesweeperGame {
 
     public MinesweeperGame(int canvasSize, int numBombs) {
         array = new Tile[canvasSize][canvasSize];
-          virtualBombs = numBombs;
+        virtualBombs = numBombs;
         this.canvasSize = canvasSize;
         for (int i = 0; i < canvasSize; i++) {
             for (int j = 0; j < canvasSize; j++) {
@@ -21,18 +23,16 @@ public class MinesweeperGame {
             }
         }
     }
-        // randomize the bombs
-        //or if numBombs == 0, when there are no bombs left to place, then the constructor ends
+    // randomize the bombs
+    //or if numBombs == 0, when there are no bombs left to place, then the constructor ends
 
 
-
-        // probability method for the bombs
-        // if (!array[i][j].ifHasBomb()) {
-        //int x = (int) (Math.random() * canvasSize);
-        // if (x == 1) {
-        // array[i][j].setHasBomb(true);
-        //numBombs--;
-
+    // probability method for the bombs
+    // if (!array[i][j].ifHasBomb()) {
+    //int x = (int) (Math.random() * canvasSize);
+    // if (x == 1) {
+    // array[i][j].setHasBomb(true);
+    //numBombs--;
 
 
     public Tile[][] getArray() {
@@ -40,19 +40,17 @@ public class MinesweeperGame {
     }
 
     public void randomizeBombsAndSetNumbers() {
-        while ( virtualBombs > 0) {
+        while (virtualBombs > 0) {
             int x = (int) (Math.random() * canvasSize);
             int y = (int) (Math.random() * canvasSize);
-            {
-                if (!array[y][x].ifHasBomb()) {
-                    array[y][x].setHasBomb(true);
-                    virtualBombs--;
-                }
+
+            if (!array[y][x].ifHasBomb()) {
+                array[y][x].setHasBomb(true);
+                virtualBombs--;
             }
         }
-
-        for (int i = 0; i < canvasSize; i++) {
-            for (int j = 0; j < canvasSize; j++) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[0].length; j++) {
 
                 if(array[i][j].ifHasBomb()== false);
                 {
@@ -64,7 +62,7 @@ public class MinesweeperGame {
 
     //checks if the game is lost and prompts the
 
-    public boolean gameWon(){
+    public boolean gameWon() {
 
         boolean x = true;
 
@@ -94,6 +92,7 @@ public class MinesweeperGame {
 
     public void gameLost() {
         //prompt losing screen fragment
+
 
     }
 
@@ -126,23 +125,36 @@ public class MinesweeperGame {
     public void revealTileAndTilesAround(int row, int col) {
 
         array[row][col].setRevealed(true);
+        outerLoop:
         for (int i = col - 1; i <= col + 1; i++) {
             for (int j = row - 1; j <= row + 1; j++) {
+                if (!((i < 0) || (i > canvasSize - 1) || (j < 0) || (j > (canvasSize - 1)))) {
+                    if (array[row][col].ifHasBomb()) {
+                        revealAllBombs();
+                        gameLost();
+                        break outerLoop;
 
-                if( !(i < 0 || i > canvasSize - 1|| j < 0 || j > canvasSize - 1)) {
-                    if (calculateNumber(array[j][i]) == 0 && array[j][i].isRevealed() == false) {
-
+                    } else if(calculateNumber(array[j][i]) == 0 && !array[j][i].isRevealed() && !array[j][i].ifHasBomb()) {
                         array[j][i].setRevealed(true);
                         revealTileAndTilesAround(j, i);
-
-                    } else {
-                        array[j][i].setRevealed(true);
+                    }else{
+                        array[row][col].setRevealed(true);
                     }
                 }
             }
         }
 
 
+    }
+
+    private void revealAllBombs() {
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[0].length; col++) {
+                if (array[row][col].ifHasBomb()) {
+                    array[row][col].setRevealed(true);
+                }
+            }
+        }
     }
 
     // revealing a square on a single click
@@ -155,7 +167,6 @@ public class MinesweeperGame {
         }
 
     }
-
 
 
     //Number(Tile tile) method to calculate the number image that should be displayed
