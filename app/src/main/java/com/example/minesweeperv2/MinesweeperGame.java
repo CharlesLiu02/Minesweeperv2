@@ -46,15 +46,17 @@ public class MinesweeperGame {
 
             if (!array[y][x].ifHasBomb()) {
                 array[y][x].setHasBomb(true);
+                //just in case idk something weird was happening with setNumber and bombs
+                array[y][x].setNumber(-1);
                 virtualBombs--;
             }
         }
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[0].length; j++) {
 
-                if(array[i][j].ifHasBomb()== false);
+                if (array[i][j].ifHasBomb() == false) ;
                 {
-                    array[i][j].setNumber(calculateNumber(array[i][j]));
+                    array[i][j].setNumber(calculateNumber(i,j));
                 }
             }
         }
@@ -130,14 +132,13 @@ public class MinesweeperGame {
             for (int j = row - 1; j <= row + 1; j++) {
                 if (!((i < 0) || (i > canvasSize - 1) || (j < 0) || (j > (canvasSize - 1)))) {
                     if (array[row][col].ifHasBomb()) {
-                        revealAllBombs();
-                        gameLost();
-                        break outerLoop;
+                        array[row][col].setRevealed(true);
 
-                    } else if(calculateNumber(array[j][i]) == 0 && !array[j][i].isRevealed() && !array[j][i].ifHasBomb()) {
+                    } else if ((array[j][i].getNumber()) == 0 && !array[j][i].isRevealed() && !array[j][i].ifHasBomb()) {
                         array[j][i].setRevealed(true);
                         revealTileAndTilesAround(j, i);
-                    }else{
+
+                    } else {
                         array[row][col].setRevealed(true);
                     }
                 }
@@ -170,56 +171,46 @@ public class MinesweeperGame {
 
 
     //Number(Tile tile) method to calculate the number image that should be displayed
-    public int calculateNumber(Tile tile) {
+    public int calculateNumber(int row, int col) {
         int count = 0;
 
-        int row = tile.getRow();
-        int col = tile.getCol();
 
-        for (int i = col - 1; i < col + 2; i++) {
-            if (((i >= 0 && i <= canvasSize - 1) && row > 0) && array[row - 1][i].ifHasBomb()) {
-                count++;
+
+            for (int j = row - 1; j <= row + 1; j++) {
+                for (int i = col - 1; i <= col + 1; i++) {
+                if (!((i < 0) || (i > canvasSize - 1) || (j < 0) || (j > (canvasSize - 1))) &&
+                        array[j][i].ifHasBomb() == true)
+                {
+                    count++;
+                }
+
+                //for (int i = col - 1; i < col + 2; i++) {
+                //if (((i >= 0 && i <= canvasSize - 1) && row > 0) && array[row - 1][i].ifHasBomb()) {
+                //  count++;
+                //   }
+                // }
+
+                //   for (int i = col - 1; i < col + 2; i++) {
+                //  if (((i >= 0 && i <= canvasSize - 1) && row < canvasSize - 1) && array[row + 1][i].ifHasBomb()) {
+                //    count++;
+                //    }
+                // }
+
+                // if (col > 0 && array[row][col - 1].ifHasBomb()) {
+                // count++;
+                // }
+//
+                // if (col < canvasSize - 1 && array[row][col + 1].ifHasBomb()) {
+                //  count++;
+                // }
+
+
             }
         }
-
-        for (int i = col - 1; i < col + 2; i++) {
-            if (((i >= 0 && i <= canvasSize - 1) && row < canvasSize - 1) && array[row + 1][i].ifHasBomb()) {
-                count++;
-            }
-        }
-
-        if (col > 0 && array[row][col - 1].ifHasBomb()) {
-            count++;
-        }
-
-        if (col < canvasSize - 1 && array[row][col + 1].ifHasBomb()) {
-            count++;
-        }
-
         return count;
+
+
     }
-
-    // not used
-//    public ArrayList sendCoordinatesAndNumbers(Tile[][] array) {
-//        ArrayList List = new ArrayList();
-//
-//        this.array = array;
-//
-//        for (int i = 0; i < canvasSize; i++) {
-//            for (int j = 0; j < canvasSize; j++) {
-//                if(array[i][j].isRevealed() == true)
-//                {
-//                    List.add(array[i][j].getRow());
-//                    List.add(array[i][j].getCol());
-//                    List.add(array[i][j].getNumber());
-//                }
-//            }
-//
-//
-//        }
-//        return List;
-//    }
-
 }
 
 
