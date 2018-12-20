@@ -55,7 +55,7 @@ public class Tile {
 
     public boolean isRevealed() { return isRevealed; }
 
-    public void setRevealed(boolean revealed) { isRevealed = revealed;  }
+    public void setRevealed(boolean revealed) { this.isRevealed = revealed;  }
 
 
     //Todo: getDisplay

@@ -181,22 +181,23 @@ public class MinesweeperGame {
 //                }
 //
 //        }
+        if (array[row][col].getNumber() == 0)
+        {
+            for (int i = col + 1; i > col; i--) {
+                if (!(i > canvasSize - 1)) {
+                    if (array[row][col].ifHasBomb()) {
+                        revealAllBombs();
+                        gameLost();
+                        break;
+                    } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                        array[row][i].setRevealed(true);
+                        revealTileAndTilesAround(row, i);
 
-        for (int i = col + 1; i > col; i--) {
-            if (!(i > canvasSize - 1)) {
-                if (array[row][col].ifHasBomb()) {
-                    revealAllBombs();
-                    gameLost();
-                    break;
-                } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
-                    array[row][i].setRevealed(true);
-                    revealTileAndTilesAround(row, i);
-
-                } else if ((array[row][i].getNumber()) > 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
-                    array[row][i].setRevealed(true);
+                    } else if ((array[row][i].getNumber()) > 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                        array[row][i].setRevealed(true);
+                    }
                 }
             }
-        }
 
         for (int i = row + 1; i > row; i--) {
             if (!(i > canvasSize - 1)) {
@@ -245,6 +246,17 @@ public class MinesweeperGame {
             }
         }
     }
+        else if(array[row][col].ifHasBomb()) {
+            revealAllBombs();
+            gameLost();
+        }
+
+        else {
+            array[row][col].setRevealed(true);
+              }
+        }
+
+
 
 
 
