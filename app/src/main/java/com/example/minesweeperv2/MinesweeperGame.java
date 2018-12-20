@@ -50,7 +50,7 @@ public class MinesweeperGame {
         }
     }
 
-    //checks if the game is lost and prompts the
+    //checks if the game is lost and prompts the victory screen if won
 
     public boolean gameWon() {
 
