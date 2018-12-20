@@ -241,22 +241,22 @@ public class BoardPixelGridView extends View {
                     if (row % 2 == 0) {
                         if (col % 2 == 0) {
                             paint.setColor(Color.rgb(118, 255, 3));
-                            canvas.drawRect(row * cellWidth, col * cellHeight,
-                                    (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+                            canvas.drawRect(col * cellWidth, row * cellHeight,
+                                    (col + 1) * cellWidth, (row + 1) * cellHeight, paint);
                         } else {
                             paint.setColor(Color.rgb(118, 212, 3));
-                            canvas.drawRect(row * cellWidth, col * cellHeight,
-                                    (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+                            canvas.drawRect(col* cellWidth, row * cellHeight,
+                                    (col + 1) * cellWidth, (row + 1) * cellHeight, paint);
                         }
                     } else {
                         if (col % 2 == 0) {
                             paint.setColor(Color.rgb(118, 212, 3));
-                            canvas.drawRect(row * cellWidth, col * cellHeight,
-                                    (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+                            canvas.drawRect(col * cellWidth, row * cellHeight,
+                                    (col + 1) * cellWidth, (row + 1) * cellHeight, paint);
                         } else {
                             paint.setColor(Color.rgb(118, 255, 3));
-                            canvas.drawRect(row * cellWidth, col * cellHeight,
-                                    (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
+                            canvas.drawRect(col * cellWidth, row * cellHeight,
+                                    (col + 1) * cellWidth, (row + 1) * cellHeight, paint);
                         }
                     }
                 }
