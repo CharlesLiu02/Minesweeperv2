@@ -52,7 +52,7 @@ public class MinesweeperGame {
 
     //checks if the game is lost and prompts the victory screen if won
 
-    public boolean gameWon() {
+    public boolean isGameWon() {
 
         boolean x = true;
 
@@ -61,9 +61,11 @@ public class MinesweeperGame {
 
                 if (array[i][j].ifHasBomb() == true) {
                     if (array[i][j].ifHasFlag() == true) {
+
                         x = true;
                     } else {
-                        x = false;
+                return false;
+
                     }
                 }
 
@@ -71,32 +73,27 @@ public class MinesweeperGame {
         }
 
         if (x == true) {
+            revealEverything();
             return true;
             // prompt victory fragment screen
-        } else {
-            return false;
             //continue game
+        }
+        return true;
+    }
+
+    private void revealEverything() {
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[0].length; col++) {
+                array[row][col].setRevealed(true);
+            }
         }
     }
 
 
-    public void gameLost() {
+    public void gameLost(){
         //prompt losing screen fragment
 
 
-    }
-
-
-    //if flag is drawn on canvas then set same ifHasFlag to true on the tile with corresponding location
-    //if flag is undrawn on canvas then set same ifHasFlag to false on the tile with corresponding location
-
-    public void ifFlagDrawn(int row, int col) {
-        array[row][col].setHasFlag(true);
-    }
-
-
-    public void ifFlagUndrawn(int row, int col) {
-        array[row][col].setHasFlag(false);
     }
 
 

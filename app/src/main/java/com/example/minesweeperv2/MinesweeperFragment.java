@@ -39,12 +39,14 @@ public class MinesweeperFragment extends Fragment {
             public void onTouch(int row, int col) {
                 Log.e("ontouch", "ontouch");
                 game.onSingleTapClickReveal(row, col);
+                game.isGameWon();
 
             }
 
             @Override
             public void onLongTouch(int row, int col) {
                 Log.e("onlongtouch", "onlongtouch");
+                game.isGameWon();
             }
         });
 
