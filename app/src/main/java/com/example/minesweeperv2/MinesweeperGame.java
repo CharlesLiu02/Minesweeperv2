@@ -125,40 +125,122 @@ public class MinesweeperGame {
     public void revealTileAndTilesAround(int row, int col) {
 
         array[row][col].setRevealed(true);
-        outerLoop:
-        for (int i = col + 1; i >= col - 1; i--) {
 
-            if (!((((i < 0) || (i > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
-                Log.e("why", "" + array[row][i].getNumber());
+//            if (!((((col + 1 < 0) || (col + 1 > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
+//                if (array[row][col].ifHasBomb()) {
+//                    revealAllBombs();
+//                    gameLost();
+//                } else if ((array[row][col + 1].getNumber()) == 0 && !array[row][col + 1].isRevealed() && !array[row][col + 1].ifHasBomb()) {
+//                    array[row][col + 1].setRevealed(true);
+//                    revealTileAndTilesAround(row, col + 1);
+//
+//                } else if ((array[row][col + 1].getNumber()) > 0 && !array[row][col + 1].isRevealed() && !array[row][col + 1].ifHasBomb()) {
+//                    array[row][col + 1].setRevealed(true);
+//                }
+//
+//        }
+//
+//            if (!((((row + 1 < 0) || (row + 1 > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
+//                if (array[row][col].ifHasBomb()) {
+//                    revealAllBombs();
+//                    gameLost();
+//                } else if ((array[row + 1][col].getNumber()) == 0 && !array[row + 1][col].isRevealed() && !array[row + 1][col].ifHasBomb()) {
+//                    array[row + 1][col].setRevealed(true);
+//                    revealTileAndTilesAround(row + 1, col);
+//
+//                } else if ((array[row + 1][col].getNumber()) > 0 && !array[row + 1][col].isRevealed() && !array[row + 1][col].ifHasBomb()) {
+//                    array[row + 1][col].setRevealed(true);
+//                }
+//
+//        }
+//
+//            if (!((((col - 1 < 0) || (col - 1 > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
+//                if (array[row][col].ifHasBomb()) {
+//                    revealAllBombs();
+//                    gameLost();
+//                } else if ((array[row][col - 1].getNumber()) == 0 && !array[row][col - 1].isRevealed() && !array[row][col - 1].ifHasBomb()) {
+//                    array[row][col - 1].setRevealed(true);
+//                    revealTileAndTilesAround(row, col - 1);
+//
+//                } else if ((array[row][col - 1].getNumber()) > 0 && !array[row][col - 1].isRevealed() && !array[row][col - 1].ifHasBomb()) {
+//                    array[row][col - 1].setRevealed(true);
+//                }
+//
+//        }
+
+//            if (!((((row - 1 < 0) || (row - 1 > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
+//                if (array[row][col].ifHasBomb()) {
+//                    revealAllBombs();
+//                    gameLost();
+//                } else if ((array[row - 1][col].getNumber()) == 0 && !array[row - 1][col].isRevealed() && !array[row - 1][col].ifHasBomb()) {
+//                    array[row - 1][col].setRevealed(true);
+//                    revealTileAndTilesAround(row - 1, col);
+//
+//                } else if ((array[row - 1][col].getNumber()) > 0 && !array[row - 1][col].isRevealed() && !array[row - 1][col].ifHasBomb()) {
+//                    array[row - 1][col].setRevealed(true);
+//                }
+//
+//        }
+
+        for (int i = col + 1; i > col; i--) {
+            if (!(i > canvasSize - 1)) {
                 if (array[row][col].ifHasBomb()) {
                     revealAllBombs();
                     gameLost();
-                    break outerLoop;
+                    break;
                 } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
                     array[row][i].setRevealed(true);
                     revealTileAndTilesAround(row, i);
 
-                } else if ((array[row][i].getNumber()) > 0 && !array[row][i].isRevealed()) {
-                    array[row][col].setRevealed(true);
+                } else if ((array[row][i].getNumber()) > 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                    array[row][i].setRevealed(true);
                 }
             }
         }
 
-        outerLoop:
-        for (int i = row + 1; i >= row - 1; i--) {
-
-            if (!((((i < 0) || (i > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
-                Log.e("why", "" + array[i][col].getNumber());
+        for (int i = row + 1; i > row; i--) {
+            if (!(i > canvasSize - 1)) {
                 if (array[row][col].ifHasBomb()) {
                     revealAllBombs();
                     gameLost();
-                    break outerLoop;
-                } else if ((array[row][i].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                    break;
+                } else if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
                     array[i][col].setRevealed(true);
                     revealTileAndTilesAround(i, col);
 
-                } else if ((array[i][col].getNumber()) > 0 && !array[i][col].isRevealed()) {
-                    array[row][col].setRevealed(true);
+                } else if ((array[i][col].getNumber()) > 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                    array[i][col].setRevealed(true);
+                }
+            }
+        }
+        for (int i = col - 1; i < col; i++) {
+            if (!(i < 0)) {
+                if (array[row][col].ifHasBomb()) {
+                    revealAllBombs();
+                    gameLost();
+                    break;
+                } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                    array[row][i].setRevealed(true);
+                    revealTileAndTilesAround(row, i);
+
+                } else if ((array[row][i].getNumber()) > 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                    array[row][i].setRevealed(true);
+                }
+            }
+        }
+
+        for (int i = row - 1; i < row; i++) {
+            if (!(i < 0)) {
+                if (array[row][col].ifHasBomb()) {
+                    revealAllBombs();
+                    gameLost();
+                    break;
+                } else if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                    array[i][col].setRevealed(true);
+                    revealTileAndTilesAround(i, col);
+
+                } else if ((array[i][col].getNumber()) > 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                    array[i][col].setRevealed(true);
                 }
             }
         }
