@@ -165,7 +165,7 @@ public class BoardPixelGridView extends View {
                                 items.add(new Item(R.drawable.minesweeper_4, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 5) {
                                 items.add(new Item(R.drawable.minesweeper_5, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
-                            } else if (board[row][col].getNumber() == 5) {
+                            } else if (board[row][col].getNumber() == 6) {
                                 items.add(new Item(R.drawable.minesweeper_6, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 7) {
                                 items.add(new Item(R.drawable.minesweeper_7, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
