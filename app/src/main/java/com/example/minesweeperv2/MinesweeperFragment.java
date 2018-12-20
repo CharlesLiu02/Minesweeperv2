@@ -58,6 +58,7 @@ public class MinesweeperFragment extends Fragment {
             gameView.setSize(10, 10);
             game = new MinesweeperGame(10, 10);
             game.randomizeBombsAndSetNumbers();
+
             gameView.setBoard(game.getArray());
         }
         else if(difficulty.equals("Medium")){
