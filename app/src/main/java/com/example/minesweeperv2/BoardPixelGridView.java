@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -131,35 +132,42 @@ public class BoardPixelGridView extends View {
 
                 int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
 
-                int left = cellWidth * getCol(event);
-                int top = cellHeight * getRow(event);
-                int right = cellWidth * (getCol(event) + 1);
-                int bottom = cellHeight * (getRow(event) + 1);
+//                int left = cellWidth * getCol(event);
+//                int top = cellHeight * getRow(event);
+//                int right = cellWidth * (getCol(event) + 1);
+//                int bottom = cellHeight * (getRow(event) + 1);
+                int left = cellWidth;
+                int right = cellWidth;
+                int top = cellHeight;
+                int bottom = cellHeight;
 
                 for (int row = 0; row < board.length; row++) {
                     for (int col = 0; col < board[row].length; col++) {
-                        if(board[row][col].isRevealed()) {
+                        Log.e("row","" + row);
+                        Log.e("col","" + col);
+                        Log.e("reveal","" + board[row][col].isRevealed());
+                        Log.e("number","" + board[row][col].getNumber());
+                        if (board[row][col].isRevealed()) {
                             if (board[row][col].ifHasBomb()) {
-                                items.add(new Item(R.drawable.bomb, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
-                                Log.e("bomb", "bomb");
+                                items.add(new Item(R.drawable.bomb, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 0) {
-                                items.add(new Item(R.drawable.minesweeper_0, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_0, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 1) {
-                                items.add(new Item(R.drawable.minesweeper_1, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_1, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 2) {
-                                items.add(new Item(R.drawable.minesweeper_2, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_2, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 3) {
-                                items.add(new Item(R.drawable.minesweeper_3, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_3, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 4) {
-                                items.add(new Item(R.drawable.minesweeper_4, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_4, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 5) {
-                                items.add(new Item(R.drawable.minesweeper_5, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_5, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 5) {
-                                items.add(new Item(R.drawable.minesweeper_6, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_6, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 7) {
-                                items.add(new Item(R.drawable.minesweeper_7, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_7, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else {
-                                items.add(new Item(R.drawable.minesweeper_8, left + ((col) * cellWidth), top + ((row) * cellHeight), right + ((col) * cellWidth), bottom + ((row) * cellHeight)));
+                                items.add(new Item(R.drawable.minesweeper_8, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             }
                         }
                     }
@@ -254,6 +262,15 @@ public class BoardPixelGridView extends View {
                 }
             }
         }
+        for (int i = 0; i < items.size(); i++) {
+            Drawable item = ContextCompat.getDrawable(getContext(), items.get(i).getDrawableId());
+            int left = items.get(i).getLeft();
+            int right = items.get(i).getRight();
+            int top = items.get(i).getTop();
+            int bottom = items.get(i).getBottom();
+            item.setBounds(left, top, right, bottom);
+            item.draw(canvas);
+        }
 
 //                else if (board[row][col].getNumber() == 0){
 //                    //need to draw numbers
@@ -264,15 +281,6 @@ public class BoardPixelGridView extends View {
 //                }
 //            }
 //        }
-        for (int i = 0; i < items.size(); i++) {
-            Drawable item = ResourcesCompat.getDrawable(getResources(), items.get(i).getDrawableId(), null);
-            int left = items.get(i).getLeft();
-            int right = items.get(i).getRight();
-            int top = items.get(i).getTop();
-            int bottom = items.get(i).getBottom();
-            item.setBounds(left, top, right, bottom);
-            item.draw(canvas);
-        }
 
         //checks which items it has to draw
 //        for (int i = 0; i < items.size(); i++) {
@@ -381,6 +389,7 @@ public class BoardPixelGridView extends View {
     //create own interface to handle clicks for grid
     public interface OnGridTouchedListener {
         void onTouch(int row, int col);
+
         void onLongTouch(int row, int col);
     }
 }
