@@ -143,10 +143,10 @@ public class BoardPixelGridView extends View {
 
                 for (int row = 0; row < board.length; row++) {
                     for (int col = 0; col < board[row].length; col++) {
-                        Log.e("row","" + row);
-                        Log.e("col","" + col);
-                        Log.e("reveal","" + board[row][col].isRevealed());
-                        Log.e("number","" + board[row][col].getNumber());
+                        Log.e("row", "" + row);
+                        Log.e("col", "" + col);
+                        Log.e("reveal", "" + board[row][col].isRevealed());
+                        Log.e("number", "" + board[row][col].getNumber());
                         if (board[row][col].isRevealed()) {
                             if (board[row][col].ifHasBomb()) {
                                 items.add(new Item(R.drawable.bomb, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
@@ -177,27 +177,6 @@ public class BoardPixelGridView extends View {
                 return true;
             }
         });
-    }
-
-    private boolean isDrawn(MotionEvent e) {
-        int cellWidth = getWidth() / numColumns, cellHeight = getHeight() / numRows;
-        int left = 0, top = 0, right = 0, bottom = 0;
-
-        left = cellWidth * getCol(e);
-        top = cellHeight * getRow(e);
-        right = cellWidth * (getCol(e) + 1);
-        bottom = cellHeight * (getRow(e) + 1);
-
-        for (int i = 0; i < items.size(); i++) {
-            int itemLeft = items.get(i).getLeft();
-            int itemTop = items.get(i).getTop();
-            int itemRight = items.get(i).getRight();
-            int itemBottom = items.get(i).getBottom();
-            if (left == itemLeft && right == itemRight && top == itemTop && bottom == itemBottom) {
-                return true;
-            }
-        }
-        return false;
     }
 
     //checks if tile already has a flag drawn or not
@@ -234,10 +213,11 @@ public class BoardPixelGridView extends View {
         if (board.length == 0 || board[0].length == 0) {
             return;
         }
+
+        //draws green where tile is not revealed
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 if (!board[row][col].isRevealed()) {
-                    //TODO: draw a green
                     if (row % 2 == 0) {
                         if (col % 2 == 0) {
                             paint.setColor(Color.rgb(118, 255, 3));
@@ -245,7 +225,7 @@ public class BoardPixelGridView extends View {
                                     (col + 1) * cellWidth, (row + 1) * cellHeight, paint);
                         } else {
                             paint.setColor(Color.rgb(118, 212, 3));
-                            canvas.drawRect(col* cellWidth, row * cellHeight,
+                            canvas.drawRect(col * cellWidth, row * cellHeight,
                                     (col + 1) * cellWidth, (row + 1) * cellHeight, paint);
                         }
                     } else {
@@ -262,6 +242,9 @@ public class BoardPixelGridView extends View {
                 }
             }
         }
+
+        //draws flags
+        //draws tiles that are revealed
         for (int i = 0; i < items.size(); i++) {
             Drawable item = ContextCompat.getDrawable(getContext(), items.get(i).getDrawableId());
             int left = items.get(i).getLeft();
@@ -271,61 +254,7 @@ public class BoardPixelGridView extends View {
             item.setBounds(left, top, right, bottom);
             item.draw(canvas);
         }
-
-//                else if (board[row][col].getNumber() == 0){
-//                    //need to draw numbers
-////                    ImageView imageView = findViewById(R.id.boardPixelGridView);
-////                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.minesweeper_0);
-////                    imageView.setImageBitmap(bitmap);
-////                    canvas.drawBitmap(bitmap, );
-//                }
-//            }
-//        }
-
-        //checks which items it has to draw
-//        for (int i = 0; i < items.size(); i++) {
-//            Drawable item = ResourcesCompat.getDrawable(getResources(), items.get(i).getDrawableId(), null);
-//            int left = items.get(i).getLeft();
-//            int right = items.get(i).getRight();
-//            int top = items.get(i).getTop();
-//            int bottom = items.get(i).getBottom();
-//            item.setBounds(left, top, right, bottom);
-//            item.draw(canvas);
-//        }
     }
-
-
-//        for (row = 0; row < numColumns; row++) {
-//            for (col = 0; col < numRows; col++) {
-//                if (row % 2 == 0) {
-//                    if (col % 2 == 0) {
-//                        paint.setColor(Color.rgb(118, 255, 3));
-//
-//                        //TODO: create tile obj and call draw method in the tile class on the object
-//                        //TODO: do canvas.tile.draw( variables )
-//                        /*Tile tile = new Tile(i,j);*/
-//
-//                        canvas.drawRect(row * cellWidth, col * cellHeight,
-//                                (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
-//                    } else {
-//                        paint.setColor(Color.rgb(118, 212, 3));
-//                        canvas.drawRect(row * cellWidth, col * cellHeight,
-//                                (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
-//                    }
-//                } else {
-//                    if (col % 2 == 0) {
-//                        paint.setColor(Color.rgb(118, 212, 3));
-//                        canvas.drawRect(row * cellWidth, col * cellHeight,
-//                                (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
-//                    } else {
-//                        paint.setColor(Color.rgb(118, 255, 3));
-//                        canvas.drawRect(row * cellWidth, col * cellHeight,
-//                                (row + 1) * cellWidth, (col + 1) * cellHeight, paint);
-//                    }
-//                }
-//            }
-//        }
-
 
     //get the row and column that was clicked
     @Override

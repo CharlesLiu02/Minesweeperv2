@@ -126,66 +126,15 @@ public class MinesweeperGame {
 
         array[row][col].setRevealed(true);
 
-//            if (!((((col + 1 < 0) || (col + 1 > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
-//                if (array[row][col].ifHasBomb()) {
-//                    revealAllBombs();
-//                    gameLost();
-//                } else if ((array[row][col + 1].getNumber()) == 0 && !array[row][col + 1].isRevealed() && !array[row][col + 1].ifHasBomb()) {
-//                    array[row][col + 1].setRevealed(true);
-//                    revealTileAndTilesAround(row, col + 1);
-//
-//                } else if ((array[row][col + 1].getNumber()) > 0 && !array[row][col + 1].isRevealed() && !array[row][col + 1].ifHasBomb()) {
-//                    array[row][col + 1].setRevealed(true);
-//                }
-//
-//        }
-//
-//            if (!((((row + 1 < 0) || (row + 1 > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
-//                if (array[row][col].ifHasBomb()) {
-//                    revealAllBombs();
-//                    gameLost();
-//                } else if ((array[row + 1][col].getNumber()) == 0 && !array[row + 1][col].isRevealed() && !array[row + 1][col].ifHasBomb()) {
-//                    array[row + 1][col].setRevealed(true);
-//                    revealTileAndTilesAround(row + 1, col);
-//
-//                } else if ((array[row + 1][col].getNumber()) > 0 && !array[row + 1][col].isRevealed() && !array[row + 1][col].ifHasBomb()) {
-//                    array[row + 1][col].setRevealed(true);
-//                }
-//
-//        }
-//
-//            if (!((((col - 1 < 0) || (col - 1 > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
-//                if (array[row][col].ifHasBomb()) {
-//                    revealAllBombs();
-//                    gameLost();
-//                } else if ((array[row][col - 1].getNumber()) == 0 && !array[row][col - 1].isRevealed() && !array[row][col - 1].ifHasBomb()) {
-//                    array[row][col - 1].setRevealed(true);
-//                    revealTileAndTilesAround(row, col - 1);
-//
-//                } else if ((array[row][col - 1].getNumber()) > 0 && !array[row][col - 1].isRevealed() && !array[row][col - 1].ifHasBomb()) {
-//                    array[row][col - 1].setRevealed(true);
-//                }
-//
-//        }
-
-//            if (!((((row - 1 < 0) || (row - 1 > canvasSize - 1))) || ((row <= 0) || (row > (canvasSize - 1))))) {
-//                if (array[row][col].ifHasBomb()) {
-//                    revealAllBombs();
-//                    gameLost();
-//                } else if ((array[row - 1][col].getNumber()) == 0 && !array[row - 1][col].isRevealed() && !array[row - 1][col].ifHasBomb()) {
-//                    array[row - 1][col].setRevealed(true);
-//                    revealTileAndTilesAround(row - 1, col);
-//
-//                } else if ((array[row - 1][col].getNumber()) > 0 && !array[row - 1][col].isRevealed() && !array[row - 1][col].ifHasBomb()) {
-//                    array[row - 1][col].setRevealed(true);
-//                }
-//
-//        }
-        if (array[row][col].getNumber() == 0)
-        {
+        if (array[row][col].getNumber() == 0) {
+            //checks left side of tile
             for (int i = col + 1; i > col; i--) {
                 if (!(i > canvasSize - 1)) {
-                  if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                    if (array[row][col].ifHasBomb()) {
+                        revealAllBombs();
+                        gameLost();
+                        break;
+                    } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
                         array[row][i].setRevealed(true);
                         revealTileAndTilesAround(row, i);
 
@@ -195,54 +144,64 @@ public class MinesweeperGame {
                 }
             }
 
-        for (int i = row + 1; i > row; i--) {
-            if (!(i > canvasSize - 1)) {
-                if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
-                    array[i][col].setRevealed(true);
-                    revealTileAndTilesAround(i, col);
+            //checks top of tile
+            for (int i = row + 1; i > row; i--) {
+                if (!(i > canvasSize - 1)) {
+                    if (array[row][col].ifHasBomb()) {
+                        revealAllBombs();
+                        gameLost();
+                        break;
+                    } else if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                        array[i][col].setRevealed(true);
+                        revealTileAndTilesAround(i, col);
 
-                } else if ((array[i][col].getNumber()) > 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
-                    array[i][col].setRevealed(true);
+                    } else if ((array[i][col].getNumber()) > 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                        array[i][col].setRevealed(true);
+                    }
                 }
             }
-        }
-        for (int i = col - 1; i < col; i++) {
-            if (!(i < 0)) {
-          if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
-                    array[row][i].setRevealed(true);
-                    revealTileAndTilesAround(row, i);
+            //checks left side of tile
+            for (int i = col - 1; i < col; i++) {
+                if (!(i < 0)) {
+                    if (array[row][col].ifHasBomb()) {
+                        revealAllBombs();
+                        gameLost();
+                        break;
+                    } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                        array[row][i].setRevealed(true);
+                        revealTileAndTilesAround(row, i);
 
-                } else if ((array[row][i].getNumber()) > 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
-                    array[row][i].setRevealed(true);
+                    } else if ((array[row][i].getNumber()) > 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
+                        array[row][i].setRevealed(true);
+                    }
                 }
             }
-        }
+            //checks bottom of tile
+            for (int i = row - 1; i < row; i++) {
+                if (!(i < 0)) {
+                    if (array[row][col].ifHasBomb()) {
+                        revealAllBombs();
+                        gameLost();
+                        break;
+                    } else if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                        array[i][col].setRevealed(true);
+                        revealTileAndTilesAround(i, col);
 
-        for (int i = row - 1; i < row; i++) {
-            if (!(i < 0)) {
-                if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
-                    array[i][col].setRevealed(true);
-                    revealTileAndTilesAround(i, col);
-
-                } else if ((array[i][col].getNumber()) > 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
-                    array[i][col].setRevealed(true);
+                    } else if ((array[i][col].getNumber()) > 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
+                        array[i][col].setRevealed(true);
+                    }
                 }
             }
-        }
-    }
-        else if(array[row][col].ifHasBomb()) {
+            //if user clicks bomb
+            //reveal all bombs
+        } else if (array[row][col].ifHasBomb()) {
             revealAllBombs();
             gameLost();
-        }
-
-        else {
+        } else {
+            // if tile is number
             array[row][col].setRevealed(true);
-              }
         }
-
-
-
-
+    }
 
 
     private void revealAllBombs() {
@@ -278,28 +237,6 @@ public class MinesweeperGame {
                         array[j][i].ifHasBomb() == true) {
                     count++;
                 }
-
-                //for (int i = col - 1; i < col + 2; i++) {
-                //if (((i >= 0 && i <= canvasSize - 1) && row > 0) && array[row - 1][i].ifHasBomb()) {
-                //  count++;3
-                //   }
-                // }
-
-                //   for (int i = col - 1; i < col + 2; i++) {
-                //  if (((i >= 0 && i <= canvasSize - 1) && row < canvasSize - 1) && array[row + 1][i].ifHasBomb()) {
-                //    count++;
-                //    }
-                // }
-
-                // if (col > 0 && array[row][col - 1].ifHasBomb()) {
-                // count++;
-                // }
-//
-                // if (col < canvasSize - 1 && array[row][col + 1].ifHasBomb()) {
-                //  count++;
-                // }
-
-
             }
         }
         return count;
