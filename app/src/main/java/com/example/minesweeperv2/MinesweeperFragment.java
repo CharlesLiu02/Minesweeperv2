@@ -18,11 +18,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 public class MinesweeperFragment extends Fragment {
     public BoardPixelGridView gameView;
     public MinesweeperGame game;
+    private Chronometer chronometer;
     IfGameWonListener mCallBack;
 
     public MinesweeperGame getGame() {
@@ -40,6 +42,10 @@ public class MinesweeperFragment extends Fragment {
         //when new BoardPixelGridView is created it automatically calls onDraw()
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
         gameView = rootView.findViewById(R.id.boardPixelGridView);
+
+        chronometer = rootView.findViewById(R.id.chronometer_frag_minesweeper_timer);
+        chronometer.start();
+
         //implements our own listener for the gameView
         gameView.onGridTouchedListener(new BoardPixelGridView.OnGridTouchedListener() {
             @Override
@@ -47,6 +53,9 @@ public class MinesweeperFragment extends Fragment {
                 Log.e("ontouch", "ontouch");
                 game.onSingleTapClickReveal(row, col);
                 passIfWon();
+                if(game.isLost() || game.isWon()){
+                    chronometer.stop();
+                }
 
             }
 

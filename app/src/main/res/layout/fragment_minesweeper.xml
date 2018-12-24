@@ -7,15 +7,31 @@
 
     <com.example.minesweeperv2.BoardPixelGridView
         android:id="@+id/boardPixelGridView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="0sp"
+        android:layout_height="0sp"
+        android:layout_marginStart="8sp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8sp"
+        android:layout_marginBottom="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chronometer_frag_minesweeper_timer"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <Chronometer
+        android:id="@+id/chronometer_frag_minesweeper_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
