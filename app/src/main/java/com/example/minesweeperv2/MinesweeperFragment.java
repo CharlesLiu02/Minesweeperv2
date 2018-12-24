@@ -2,6 +2,7 @@
 
 package com.example.minesweeperv2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 public class MinesweeperFragment extends Fragment {
     public BoardPixelGridView gameView;
     public MinesweeperGame game;
+    IfGameWonListener mCallBack;
 
     public MinesweeperGame getGame() {
         return game;
@@ -44,14 +46,13 @@ public class MinesweeperFragment extends Fragment {
             public void onTouch(int row, int col) {
                 Log.e("ontouch", "ontouch");
                 game.onSingleTapClickReveal(row, col);
-                game.isGameWon();
+                passIfWon();
 
             }
 
             @Override
             public void onLongTouch(int row, int col) {
                 Log.e("onlongtouch", "onlongtouch");
-                game.isGameWon();
             }
         });
 
@@ -103,5 +104,23 @@ public class MinesweeperFragment extends Fragment {
         fm.beginTransaction().replace(R.id.container_main, new StartScreenFragment()).commit();
 
         return true;
+    }
+
+//    public void setIfGameWonListener(Activity activity){
+//        mCallBack = (IfGameWonListener) activity;
+//    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallBack = (IfGameWonListener) context;
+    }
+
+    public void passIfWon() {
+        mCallBack.ifGameWon(game.isWon(), game.isLost());
+    }
+
+    public interface IfGameWonListener{
+        void ifGameWon(boolean ifWon, boolean ifLost);
     }
 }

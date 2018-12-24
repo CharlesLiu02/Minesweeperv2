@@ -24,10 +24,10 @@ public class EndScreenFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //inflate view in which view will be rendered by creating view object in memory
-        View rootView = inflater.inflate(R.layout.fragment_end_screen, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_lost_screen, container, false);
 
         //wired the widgets
-        homeButton = rootView.findViewById(R.id.button_frag_end_screen_home);
+        homeButton = rootView.findViewById(R.id.button_frag_lost_screen_home);
 
         //replaces start screen fragment with minesweeper fragment when the button is clicked
         //setting the onClickListeners to create a new listener when clicked
@@ -53,7 +53,7 @@ public class EndScreenFragment extends Fragment {
             //creates a new MinesweeperFragment when clicked
             //commit() saves the changes in the shared preferences
             switch(view.getId()) {
-                case R.id.button_frag_end_screen_home:
+                case R.id.button_frag_lost_screen_home:
                     editor.putString(KEY, "end");
                     editor.commit();
                     Toast.makeText(getContext(), "hi", Toast.LENGTH_SHORT).show();

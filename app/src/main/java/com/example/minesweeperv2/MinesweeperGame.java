@@ -2,6 +2,7 @@
 
 package com.example.minesweeperv2;
 
+import android.app.Activity;
 import android.graphics.Canvas;
 import android.util.Log;
 
@@ -12,8 +13,23 @@ public class MinesweeperGame {
     private Tile[][] array;
     private int virtualBombs;
     private int canvasSize;
+    private boolean isWon;
+    private boolean isLost;
+
+    public boolean isLost() {
+        return isLost;
+    }
+
+    public void setLost(boolean lost) {
+        isLost = lost;
+    }
+
+    public boolean isWon() {
+        return isWon;
+    }
 
     public MinesweeperGame(int canvasSize, int numBombs) {
+        isWon = false;
         array = new Tile[canvasSize][canvasSize];
         virtualBombs = numBombs;
         this.canvasSize = canvasSize;
@@ -52,54 +68,30 @@ public class MinesweeperGame {
 
     //checks if the game is lost and prompts the victory screen if won
 
-    public boolean isGameWon() {
-
-        boolean x = true;
-
+    public void isGameWon() {
+        outerLoop:
         for (int i = 0; i < canvasSize; i++) {
             for (int j = 0; j < canvasSize; j++) {
 
                 if (array[i][j].ifHasBomb() == true) {
                     if (array[i][j].ifHasFlag() == true) {
 
-                        x = true;
-
-                    } else {
-
-                        return false;
-
+                        isWon = true;
+                        break outerLoop;
                     }
                 }
-
             }
         }
-
-        if (x == true) {
-            revealEverything();
-
-            // prompt victory fragment screen
-
-        }
-        //continue game
-     return true;
-
+        isWon = false;
     }
 
-    private void revealEverything() {
-        for (int row = 0; row < array.length; row++) {
-            for (int col = 0; col < array[0].length; col++) {
-                array[row][col].setRevealed(true);
-            }
-        }
-    }
-
-
-    public void gameLost(){
-        //prompt losing screen fragment
-
-
-    }
-
+//    private void revealEverything() {
+//        for (int row = 0; row < array.length; row++) {
+//            for (int col = 0; col < array[0].length; col++) {
+//                array[row][col].setRevealed(true);
+//            }
+//        }
+//    }
 
     //check if tile has or doesn't have bomb then:
     // logic for that
@@ -123,7 +115,7 @@ public class MinesweeperGame {
                 if (!(i > canvasSize - 1)) {
                     if (array[row][col].ifHasBomb()) {
                         revealAllBombs();
-                        gameLost();
+                        setLost(true);
                         break;
                     } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
                         array[row][i].setRevealed(true);
@@ -140,7 +132,7 @@ public class MinesweeperGame {
                 if (!(i > canvasSize - 1)) {
                     if (array[row][col].ifHasBomb()) {
                         revealAllBombs();
-                        gameLost();
+                        setLost(true);
                         break;
                     } else if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
                         array[i][col].setRevealed(true);
@@ -156,7 +148,7 @@ public class MinesweeperGame {
                 if (!(i < 0)) {
                     if (array[row][col].ifHasBomb()) {
                         revealAllBombs();
-                        gameLost();
+                        setLost(true);
                         break;
                     } else if ((array[row][i].getNumber()) == 0 && !array[row][i].isRevealed() && !array[row][i].ifHasBomb()) {
                         array[row][i].setRevealed(true);
@@ -172,7 +164,7 @@ public class MinesweeperGame {
                 if (!(i < 0)) {
                     if (array[row][col].ifHasBomb()) {
                         revealAllBombs();
-                        gameLost();
+                        setLost(true);
                         break;
                     } else if ((array[i][col].getNumber()) == 0 && !array[i][col].isRevealed() && !array[i][col].ifHasBomb()) {
                         array[i][col].setRevealed(true);
@@ -187,11 +179,12 @@ public class MinesweeperGame {
             //reveal all bombs
         } else if (array[row][col].ifHasBomb()) {
             revealAllBombs();
-            gameLost();
+            setLost(true);
         } else {
             // if tile is number
             array[row][col].setRevealed(true);
         }
+        isGameWon();
     }
 
 
@@ -231,8 +224,6 @@ public class MinesweeperGame {
             }
         }
         return count;
-
-
     }
 }
 
