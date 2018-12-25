@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +26,7 @@ public class MinesweeperFragment extends Fragment {
     public BoardPixelGridView gameView;
     public MinesweeperGame game;
     private Chronometer chronometer;
-    IfGameWonListener mCallBack;
+    IfGameOverListener mCallBack;
 
     public MinesweeperGame getGame() {
         return game;
@@ -44,6 +45,7 @@ public class MinesweeperFragment extends Fragment {
         gameView = rootView.findViewById(R.id.boardPixelGridView);
 
         chronometer = rootView.findViewById(R.id.chronometer_frag_minesweeper_timer);
+        chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
 
         //implements our own listener for the gameView
@@ -55,6 +57,7 @@ public class MinesweeperFragment extends Fragment {
                 passIfWon();
                 if(game.isLost() || game.isWon()){
                     chronometer.stop();
+                    passShowTime();
                 }
 
             }
@@ -94,6 +97,10 @@ public class MinesweeperFragment extends Fragment {
 
     }
 
+    private int showElapsedTime() {
+        long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+        return (int) elapsedMillis;
+    }
 
     public BoardPixelGridView getGameView() {
         return gameView;
@@ -122,14 +129,19 @@ public class MinesweeperFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mCallBack = (IfGameWonListener) context;
+        mCallBack = (IfGameOverListener) context;
     }
 
     public void passIfWon() {
         mCallBack.ifGameWon(game.isWon(), game.isLost());
     }
 
-    public interface IfGameWonListener{
+    public void passShowTime(){
+        mCallBack.showTime(showElapsedTime());
+    }
+
+    public interface IfGameOverListener{
         void ifGameWon(boolean ifWon, boolean ifLost);
+        void showTime(int time);
     }
 }

@@ -2,16 +2,22 @@
 
 package com.example.minesweeperv2;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements MinesweeperFragment.IfGameWonListener {
+public class MainActivity extends AppCompatActivity implements MinesweeperFragment.IfGameOverListener {
+    private TextView textViewTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements MinesweeperFragme
         //initalize variables
         TextView textView = view.findViewById(R.id.textView_frag_lost_screen_game_over);
         Button buttonHome = view.findViewById(R.id.button_frag_lost_screen_home);
+        textViewTime = view.findViewById(R.id.textView_frag_lost_screen_time);
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements MinesweeperFragme
                 fm.beginTransaction().replace(R.id.container_main, new StartScreenFragment()).commit();
             }
         });
-
         dialog.show();
     }
 
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MinesweeperFragme
 
         //need for creating custom view
         LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_lost_screen, null);
+        View view = inflater.inflate(R.layout.fragment_won_screen, null);
 
         alertDialogBuilder.setView(view);
         final AlertDialog dialog = alertDialogBuilder.create();
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements MinesweeperFragme
         //initalize variables
         TextView textView = view.findViewById(R.id.textView_frag_won_screen_congratulations);
         Button buttonHome = view.findViewById(R.id.button_frag_won_screen_home);
+        textViewTime = view.findViewById(R.id.textView_frag_won_screen_time);
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements MinesweeperFragme
                 fm.beginTransaction().replace(R.id.container_main, new StartScreenFragment()).commit();
             }
         });
-
         dialog.show();
     }
 
@@ -94,6 +100,12 @@ public class MainActivity extends AppCompatActivity implements MinesweeperFragme
             showGameOverDialog();
         }
 
+    }
+
+    @Override
+    public void showTime(int time) {
+        time = time / 1000;
+        textViewTime.setText(time + "  seconds");
     }
 
 }
