@@ -190,7 +190,6 @@ public class MinesweeperGame {
             // if tile is number
             array[row][col].setRevealed(true);
         }
-        isGameWon();
     }
 
 

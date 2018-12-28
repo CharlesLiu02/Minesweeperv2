@@ -91,15 +91,22 @@ public class MainActivity extends AppCompatActivity implements MinesweeperFragme
 
 
     @Override
-    public void ifGameWon(boolean ifWon, boolean ifLost) {
-        //if game won or lost
-        if(ifWon){
-            showGameWonDialog();
-        }
+    public void ifGameLost(boolean ifLost) {
+        //if game lost
+        //the show game lost dialog
         if(ifLost){
             showGameOverDialog();
         }
 
+    }
+
+    @Override
+    public void ifGameWon(boolean ifWon) {
+        //if game won
+        //then show game won dialog
+        if(ifWon){
+            showGameWonDialog();
+        }
     }
 
     @Override

@@ -106,6 +106,7 @@ public class BoardPixelGridView extends View {
                     board[r][c].setHasFlag(true);
                 }
                 listener.updateFlags();
+                listener.ifWon();
                 invalidate();
             }
 
@@ -317,5 +318,7 @@ public class BoardPixelGridView extends View {
         void onLongTouch(int row, int col);
 
         void updateFlags();
+
+        void ifWon();
     }
 }

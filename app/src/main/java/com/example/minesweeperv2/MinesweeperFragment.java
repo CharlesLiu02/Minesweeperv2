@@ -2,7 +2,6 @@
 
 package com.example.minesweeperv2;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -58,8 +56,8 @@ public class MinesweeperFragment extends Fragment {
             public void onTouch(int row, int col) {
                 Log.e("ontouch", "ontouch");
                 game.onSingleTapClickReveal(row, col);
-                passIfWon();
-                if (game.isLost() || game.isWon()) {
+                passIfLost();
+                if (game.isLost()) {
                     chronometer.stop();
                     passShowTime();
                 }
@@ -86,6 +84,16 @@ public class MinesweeperFragment extends Fragment {
                 }
                 textViewFlags.setText(bombs - flags + "");
             }
+
+            @Override
+            public void ifWon() {
+                game.isGameWon();
+                passIfWon();
+                if(game.isWon()){
+                    chronometer.stop();
+                    passShowTime();
+                }
+            }
         });
 
         //receives information from StartScreenFragment about difficulty value
@@ -96,7 +104,7 @@ public class MinesweeperFragment extends Fragment {
         //creates a new game and sets size of the game
         if (difficulty.equals("Easy")) {
             gameView.setSize(10, 10);
-            game = new MinesweeperGame(10, 10);
+            game = new MinesweeperGame(10, 1);
             game.randomizeBombsAndSetNumbers();
             gameView.setBoard(game.getArray());
             textViewFlags.setText("10");
@@ -152,8 +160,12 @@ public class MinesweeperFragment extends Fragment {
         mCallBack = (IfGameOverListener) context;
     }
 
-    public void passIfWon() {
-        mCallBack.ifGameWon(game.isWon(), game.isLost());
+    public void passIfLost() {
+        mCallBack.ifGameLost(game.isLost());
+    }
+
+    public void passIfWon(){
+        mCallBack.ifGameWon(game.isWon());
     }
 
     public void passShowTime() {
@@ -161,7 +173,9 @@ public class MinesweeperFragment extends Fragment {
     }
 
     public interface IfGameOverListener {
-        void ifGameWon(boolean ifWon, boolean ifLost);
+        void ifGameLost(boolean ifLost);
+
+        void ifGameWon(boolean ifWon);
 
         void showTime(int time);
     }
