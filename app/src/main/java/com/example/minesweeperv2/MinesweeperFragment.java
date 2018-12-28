@@ -104,7 +104,7 @@ public class MinesweeperFragment extends Fragment {
         //creates a new game and sets size of the game
         if (difficulty.equals("Easy")) {
             gameView.setSize(10, 10);
-            game = new MinesweeperGame(10, 1);
+            game = new MinesweeperGame(10, 10);
             game.randomizeBombsAndSetNumbers();
             gameView.setBoard(game.getArray());
             textViewFlags.setText("10");
