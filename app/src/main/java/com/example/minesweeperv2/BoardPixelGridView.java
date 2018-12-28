@@ -105,6 +105,7 @@ public class BoardPixelGridView extends View {
                     items.add(new Item(R.drawable.minesweeper_flag, left, top, right, bottom));
                     board[r][c].setHasFlag(true);
                 }
+                listener.updateFlags();
                 invalidate();
             }
 
@@ -140,6 +141,9 @@ public class BoardPixelGridView extends View {
                         Log.e("reveal", "" + board[row][col].isRevealed());
                         Log.e("number", "" + board[row][col].getNumber());
                         if (board[row][col].isRevealed()) {
+                            if(board[row][col].ifHasFlag() && !board[row][col].ifHasBomb()){
+                                board[row][col].setHasFlag(false);
+                            }
                             if (board[row][col].ifHasBomb()) {
                                 items.add(new Item(R.drawable.bomb, (col) * cellWidth, (row) * cellHeight, (col + 1) * cellWidth, (row + 1) * cellHeight));
                             } else if (board[row][col].getNumber() == 0) {
@@ -164,6 +168,7 @@ public class BoardPixelGridView extends View {
                         }
                     }
                 }
+                listener.updateFlags();
                 invalidate();
                 return true;
             }
@@ -310,5 +315,7 @@ public class BoardPixelGridView extends View {
         void onTouch(int row, int col);
 
         void onLongTouch(int row, int col);
+
+        void updateFlags();
     }
 }

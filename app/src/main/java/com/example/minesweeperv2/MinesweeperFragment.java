@@ -26,11 +26,13 @@ public class MinesweeperFragment extends Fragment {
     public BoardPixelGridView gameView;
     public MinesweeperGame game;
     private Chronometer chronometer;
+    private TextView textViewFlags;
     IfGameOverListener mCallBack;
 
     public MinesweeperGame getGame() {
         return game;
     }
+
     //creates the view of the fragment
     //basically creates what is to be shown on the fragment screen
     @Nullable
@@ -43,6 +45,8 @@ public class MinesweeperFragment extends Fragment {
         //when new BoardPixelGridView is created it automatically calls onDraw()
         View rootView = inflater.inflate(R.layout.fragment_minesweeper, container, false);
         gameView = rootView.findViewById(R.id.boardPixelGridView);
+        textViewFlags = rootView.findViewById(R.id.textView_frag_minesweeper_flags);
+
 
         chronometer = rootView.findViewById(R.id.chronometer_frag_minesweeper_timer);
         chronometer.setBase(SystemClock.elapsedRealtime());
@@ -55,7 +59,7 @@ public class MinesweeperFragment extends Fragment {
                 Log.e("ontouch", "ontouch");
                 game.onSingleTapClickReveal(row, col);
                 passIfWon();
-                if(game.isLost() || game.isWon()){
+                if (game.isLost() || game.isWon()) {
                     chronometer.stop();
                     passShowTime();
                 }
@@ -66,6 +70,21 @@ public class MinesweeperFragment extends Fragment {
             public void onLongTouch(int row, int col) {
                 Log.e("onlongtouch", "onlongtouch");
             }
+
+            @Override
+            public void updateFlags() {
+                Tile[][] array = game.getArray();
+                int bombs = game.getBombs();
+                int flags = 0;
+                for (int r = 0; r < array.length; r++) {
+                    for (int c = 0; c < array[0].length; c++) {
+                        if (array[r][c].ifHasFlag()) {
+                            flags++;
+                        }
+                    }
+                }
+                textViewFlags.setText(bombs - flags + "");
+            }
         });
 
         //receives information from StartScreenFragment about difficulty value
@@ -74,24 +93,24 @@ public class MinesweeperFragment extends Fragment {
         String difficulty = sharedPref.getString(StartScreenFragment.KEY, "Easy");
         //depending on difficulty, sets size of the gameView
         //creates a new game and sets size of the game
-        if(difficulty.equals("Easy")) {
+        if (difficulty.equals("Easy")) {
             gameView.setSize(10, 10);
             game = new MinesweeperGame(10, 10);
             game.randomizeBombsAndSetNumbers();
-
             gameView.setBoard(game.getArray());
-        }
-        else if(difficulty.equals("Medium")){
+            textViewFlags.setText("10");
+        } else if (difficulty.equals("Medium")) {
             gameView.setSize(12, 12);
             game = new MinesweeperGame(12, 25);
             game.randomizeBombsAndSetNumbers();
             gameView.setBoard(game.getArray());
-        }
-        else {
+            textViewFlags.setText("25");
+        } else {
             gameView.setSize(15, 15);
             game = new MinesweeperGame(15, 45);
             game.randomizeBombsAndSetNumbers();
             gameView.setBoard(game.getArray());
+            textViewFlags.setText("45");
         }
         return rootView;
 
@@ -136,12 +155,13 @@ public class MinesweeperFragment extends Fragment {
         mCallBack.ifGameWon(game.isWon(), game.isLost());
     }
 
-    public void passShowTime(){
+    public void passShowTime() {
         mCallBack.showTime(showElapsedTime());
     }
 
-    public interface IfGameOverListener{
+    public interface IfGameOverListener {
         void ifGameWon(boolean ifWon, boolean ifLost);
+
         void showTime(int time);
     }
 }

@@ -16,22 +16,56 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chronometer_frag_minesweeper_timer"
-        app:layout_constraintVertical_bias="0.279" />
+        app:layout_constraintVertical_bias="0.42" />
 
     <Chronometer
         android:id="@+id/chronometer_frag_minesweeper_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:textSize="30sp"
+        android:fontFamily="@font/twiddlestix1"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_frag_minesweeper_flags"
+        android:layout_width="38dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="324dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/boardPixelGridView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chronometer_frag_minesweeper_timer"
+        app:layout_constraintVertical_bias="0.354"
+        app:srcCompat="@drawable/minesweeper_flag" />
+
+    <TextView
+        android:id="@+id/textView_frag_minesweeper_flags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/twiddlestix1"
+        android:text="1"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/boardPixelGridView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintStart_toEndOf="@+id/imageView_frag_minesweeper_flags"
+        app:layout_constraintTop_toBottomOf="@+id/chronometer_frag_minesweeper_timer"
+        app:layout_constraintVertical_bias="0.289" />
 
 </android.support.constraint.ConstraintLayout>
