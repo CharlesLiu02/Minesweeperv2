@@ -16,7 +16,6 @@ public class MinesweeperGame {
     private boolean isWon;
     private boolean isLost;
     private int bombs;
-    private int flags;
 
     public boolean isLost() {
         return isLost;
@@ -35,7 +34,6 @@ public class MinesweeperGame {
         array = new Tile[canvasSize][canvasSize];
         virtualBombs = numBombs;
         bombs = numBombs;
-        flags = 0;
         this.canvasSize = canvasSize;
         for (int i = 0; i < canvasSize; i++) {
             for (int j = 0; j < canvasSize; j++) {
@@ -46,14 +44,6 @@ public class MinesweeperGame {
 
     public int getBombs() {
         return bombs;
-    }
-
-    public int getFlags() {
-        return flags;
-    }
-
-    public void setFlags(int flags) {
-        this.flags = flags;
     }
 
     public Tile[][] getArray() {

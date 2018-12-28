@@ -73,6 +73,7 @@ public class MinesweeperFragment extends Fragment {
 
             @Override
             public void updateFlags() {
+                //calculates amount of flags user has left
                 Tile[][] array = game.getArray();
                 int bombs = game.getBombs();
                 int flags = 0;
