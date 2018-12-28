@@ -75,20 +75,20 @@ public class MinesweeperGame {
     //checks if the game is lost and prompts the victory screen if won
 
     public void isGameWon() {
-        outerLoop:
+        int count = 0;
         for (int i = 0; i < canvasSize; i++) {
             for (int j = 0; j < canvasSize; j++) {
-
-                if (array[i][j].ifHasBomb() == true) {
-                    if (array[i][j].ifHasFlag() == true) {
-
-                        isWon = true;
-                        break outerLoop;
-                    }
+                if (array[i][j].ifHasBomb() && array[i][j].ifHasFlag()) {
+                    count++;
                 }
             }
         }
-        isWon = false;
+        if(count == bombs){
+            isWon = true;
+        }
+        else{
+            isWon = false;
+        }
     }
 
 //    private void revealEverything() {
