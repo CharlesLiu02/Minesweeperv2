@@ -54,7 +54,6 @@ public class MinesweeperFragment extends Fragment {
         gameView.onGridTouchedListener(new BoardPixelGridView.OnGridTouchedListener() {
             @Override
             public void onTouch(int row, int col) {
-                Log.e("ontouch", "ontouch");
                 game.onSingleTapClickReveal(row, col);
                 passIfLost();
                 if (game.isLost()) {
@@ -66,7 +65,6 @@ public class MinesweeperFragment extends Fragment {
 
             @Override
             public void onLongTouch(int row, int col) {
-                Log.e("onlongtouch", "onlongtouch");
             }
 
             @Override

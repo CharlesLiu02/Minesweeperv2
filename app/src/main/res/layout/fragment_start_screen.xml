@@ -29,48 +29,48 @@
         android:id="@+id/button_start_screen_easy"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#55b92f"
+        android:fontFamily="@font/twiddlestix1"
         android:text="Easy"
         android:textColor="#fff"
-        android:fontFamily="@font/twiddlestix1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_screen_hard"
         app:layout_constraintEnd_toStartOf="@+id/button_start_screen_medium"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_frag_start_screen_choose_difficulty"
+        app:layout_constraintVertical_bias="0.463" />
 
     <Button
         android:id="@+id/button_start_screen_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="#55b92f"
+        android:fontFamily="@font/twiddlestix1"
         android:text="Medium"
         android:textColor="#fff"
-        android:fontFamily="@font/twiddlestix1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_screen_hard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_start_screen_easy"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_frag_start_screen_choose_difficulty"
+        app:layout_constraintVertical_bias="0.463" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_start_picture"
         android:layout_width="426dp"
         android:layout_height="257dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_start_title"
         app:srcCompat="@drawable/mountains" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView_start_title"
         android:layout_width="414dp"
         android:layout_height="77dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,6 +105,6 @@
         android:textColor="@color/colorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_start_picture" />
 
 </android.support.constraint.ConstraintLayout>

@@ -13,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 public class StartScreenFragment extends Fragment{
 
     private Button buttonEasy, buttonMedium, buttonHard;
+    private ImageView imageViewTitle, imageViewPicture;
 
     public static final String KEY = "difficulty key";
 
@@ -30,6 +34,12 @@ public class StartScreenFragment extends Fragment{
         buttonEasy = rootView.findViewById(R.id.button_start_screen_easy);
         buttonMedium = rootView.findViewById(R.id.button_start_screen_medium);
         buttonHard = rootView.findViewById(R.id.button_start_screen_hard);
+        imageViewTitle = rootView.findViewById(R.id.imageView_start_title);
+        imageViewPicture = rootView.findViewById(R.id.imageView_start_picture);
+
+        Glide.with(this).load(R.drawable.minesweeper).into(imageViewTitle);
+        Glide.with(this).load(R.drawable.mountains).into(imageViewPicture);
+
 
         //replaces start screen fragment with minesweeper fragment when the button is clicked
         //setting the onClickListeners to create a new listener when clicked

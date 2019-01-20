@@ -68,9 +68,6 @@ public class BoardPixelGridView extends View {
                 int r = getRow(event);
                 int c = getCol(event);
 
-                Log.e("row", "" + r);
-                Log.e("col", "" + c);
-
                 listener.onLongTouch(r, c);
 
                 int cellHeight = getHeight() / numRows;
@@ -120,11 +117,7 @@ public class BoardPixelGridView extends View {
                 int r = getRow(event);
                 int c = getCol(event);
 
-                Log.e("row", "" + r);
-                Log.e("col", "" + c);
-
                 listener.onTouch(r, c);
-                Log.e("onsingletapup", "onsingletapup");
 
                 //Toast.makeText(getContext(), "short click", Toast.LENGTH_SHORT).show();
 
@@ -137,10 +130,6 @@ public class BoardPixelGridView extends View {
 
                 for (int row = 0; row < board.length; row++) {
                     for (int col = 0; col < board[row].length; col++) {
-                        Log.e("row", "" + row);
-                        Log.e("col", "" + col);
-                        Log.e("reveal", "" + board[row][col].isRevealed());
-                        Log.e("number", "" + board[row][col].getNumber());
                         if (board[row][col].isRevealed()) {
                             if(board[row][col].ifHasFlag() && !board[row][col].ifHasBomb()){
                                 board[row][col].setHasFlag(false);
